@@ -12,7 +12,7 @@ interface BoardProps {
 
 export const Board: React.FC<BoardProps> = ({ board, winner, onSquareClick }) => {
   return (
-    <div className="border-gray-600 border-4 rounded-lg bg-gray-100 p-2 min-w-40 inline-block">
+    <div className="inline-block min-w-40 rounded-lg border-4 border-gray-600 bg-gray-100 p-2">
       {[0, 1, 2].map((rowIndex) => (
         <div key={rowIndex} className="flex">
           {[0, 1, 2].map((colIndex) => (
