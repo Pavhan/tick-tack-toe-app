@@ -8,13 +8,13 @@ interface GameInfoProps {
 }
 
 export const GameInfo: React.FC<GameInfoProps> = ({ winner, isXNext }) => (
-  <div>
+  <div className="mb-3">
     {winner ? (
       <p className="animate-pulse text-2xl font-bold text-green-600">
         {winner === 'Draw' ? "It's a Draw!" : `Winner is: ${winner}!`}
       </p>
     ) : (
-      <p className="flex items-center gap-2 text-2xl font-bold">
+      <p className="flex items-center justify-center gap-2 text-2xl font-bold">
         Next player:{' '}
         <span className="inline-block size-8">
           <BoardIcon value={isXNext ? 'X' : 'O'} />

@@ -6,20 +6,21 @@ export type Winner = Player | 'Draw' | null;
 
 interface BoardProps {
   board: Player[];
+  boardSize: number;
   winner: Winner;
   onSquareClick: (index: number) => void;
 }
 
-export const Board: React.FC<BoardProps> = ({ board, winner, onSquareClick }) => (
-  <div className="inline-block min-w-40 rounded-lg border-4 border-gray-600 bg-gray-100 p-2">
-    {[0, 1, 2].map((rowIndex) => (
+export const Board: React.FC<BoardProps> = ({ board, boardSize, winner, onSquareClick }) => (
+  <div className="rounded-lg border-4 border-gray-600 bg-gray-100 p-2">
+    {Array.from({ length: boardSize }, (_, rowIndex) => (
       <div key={rowIndex} className="flex">
-        {[0, 1, 2].map((colIndex) => (
+        {Array.from({ length: boardSize }, (_, colIndex) => (
           <BoardButton
             key={colIndex}
-            value={board[rowIndex * 3 + colIndex]}
-            onClick={() => onSquareClick(rowIndex * 3 + colIndex)}
-            disabled={!!winner || !!board[rowIndex * 3 + colIndex]}
+            value={board[rowIndex * boardSize + colIndex]}
+            onClick={() => onSquareClick(rowIndex * boardSize + colIndex)}
+            disabled={!!winner || !!board[rowIndex * boardSize + colIndex]}
           />
         ))}
       </div>
