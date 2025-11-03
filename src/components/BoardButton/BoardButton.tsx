@@ -1,7 +1,7 @@
 import React from 'react';
-import { BoardIcon } from '@/components/BoardIcon/BoardButton';
-
-type Player = 'X' | 'O' | null;
+import { PlayerIcon } from '@/components/PlayerIcon/PlayerIcon';
+import type { Player } from '@/lib/types';
+import { cn } from '@/lib/utils';
 
 interface BoardButtonProps {
   value: Player;
@@ -11,10 +11,14 @@ interface BoardButtonProps {
 
 export const BoardButton: React.FC<BoardButtonProps> = ({ value, onClick, disabled }) => (
   <button
-    className="m-0.5 size-12 cursor-pointer border-2 border-neutral-400 bg-white p-2 font-bold transition-all hover:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-white"
+    className={cn(
+      'm-0.5 flex size-12 cursor-pointer items-center justify-center',
+      'border-2 border-neutral-400 bg-white font-bold transition-all',
+      'hover:bg-gray-200 disabled:cursor-not-allowed hover:disabled:bg-white',
+    )}
     onClick={onClick}
     disabled={disabled}
   >
-    <BoardIcon value={value} />
+    <PlayerIcon value={value} />
   </button>
 );

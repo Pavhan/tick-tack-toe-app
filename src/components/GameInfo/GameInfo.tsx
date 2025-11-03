@@ -1,6 +1,7 @@
 import React from 'react';
-import type { Winner } from '@/components/Board/Board';
-import { BoardIcon } from '@/components/BoardIcon/BoardButton';
+import { PlayerIcon } from '@/components/PlayerIcon/PlayerIcon';
+import { getNextPlayer } from '@/lib/constants';
+import type { Winner } from '@/lib/types';
 
 interface GameInfoProps {
   winner: Winner;
@@ -10,15 +11,18 @@ interface GameInfoProps {
 export const GameInfo: React.FC<GameInfoProps> = ({ winner, isXNext }) => (
   <div className="mb-3">
     {winner ? (
-      <p className="animate-pulse text-2xl font-bold text-green-600">
-        {winner === 'Draw' ? "It's a Draw!" : `Winner is: ${winner}!`}
+      <p className="flex items-center justify-center gap-2 text-2xl font-bold text-green-600">
+        {winner === 'Draw' ? (
+          "It's a Draw!"
+        ) : (
+          <>
+            Winner is: <PlayerIcon value={winner} />
+          </>
+        )}
       </p>
     ) : (
       <p className="flex items-center justify-center gap-2 text-2xl font-bold">
-        Next player:{' '}
-        <span className="inline-block size-8">
-          <BoardIcon value={isXNext ? 'X' : 'O'} />
-        </span>
+        Next player: <PlayerIcon value={getNextPlayer(isXNext)} />
       </p>
     )}
   </div>

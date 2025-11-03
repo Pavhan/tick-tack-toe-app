@@ -1,8 +1,6 @@
 import React from 'react';
 import { BoardButton } from '@/components/BoardButton/BoardButton';
-
-export type Player = 'X' | 'O' | null;
-export type Winner = Player | 'Draw' | null;
+import type { Player, Winner } from '@/lib/types';
 
 interface BoardProps {
   board: Player[];

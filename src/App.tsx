@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Board, type Player, type Winner } from '@/components/Board/Board';
 import { BoardSizeSelector } from '@/components/BoardSizeSelector/BoardSizeSelector';
 import { Button } from '@/components/Button/Button';
 import { GameInfo } from '@/components/GameInfo/GameInfo';
+import { getNextPlayer } from '@/lib/constants';
+import { Board } from './components/Board/Board';
+import type { Player, Winner } from './lib/types';
 
 function App() {
   const [boardSize, setBoardSize] = useState(3);
@@ -102,7 +104,7 @@ function App() {
   const handleClick = (index: number) => {
     if (board[index] || winner) return;
     const newBoard = [...board];
-    newBoard[index] = isXNext ? 'X' : 'O';
+    newBoard[index] = getNextPlayer(isXNext);
     setBoard(newBoard);
     setIsXNext(!isXNext);
     const gameWinner = checkWinner(newBoard, boardSize);

@@ -19,7 +19,7 @@ export const BoardSizeSelector: React.FC<BoardSizeSelectorProps> = ({
   onSizeChange,
 }) => {
   return (
-    <div className="flex flex-row flex-wrap items-center justify-center gap-4 p-4 md:flex-col">
+    <div className="flex flex-row flex-wrap items-center justify-center gap-4 p-4 md:flex-col md:items-start">
       <div>
         <h3 className="text-lg font-medium text-gray-700">
           Board Size: {boardSize}x{boardSize}
