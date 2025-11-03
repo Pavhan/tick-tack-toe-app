@@ -1,5 +1,5 @@
 import React from 'react';
-import { BoardIcon } from '../BoardIcon/BoardButton';
+import { BoardIcon } from '@/components/BoardIcon/BoardButton';
 
 type Player = 'X' | 'O' | null;
 

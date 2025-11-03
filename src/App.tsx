@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Board, type Player, type Winner } from './components/Board/Board';
-import { Button } from './components/Button/Button';
-import { GameInfo } from './components/GameInfo/GameInfo';
+import { Board, type Player, type Winner } from '@/components/Board/Board';
+import { Button } from '@/components/Button/Button';
+import { GameInfo } from '@/components/GameInfo/GameInfo';
 
 function App() {
   const [board, setBoard] = useState<Player[]>(Array(9).fill(null));
@@ -55,8 +55,8 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-full p-4 bg-gray-100 gap-4">
-      <h1 className="font-bold text-4xl">Tic-Tac-Toe</h1>
+    <div className="flex min-h-screen w-full flex-col items-center justify-center gap-4 bg-gray-100 p-4">
+      <h1 className="text-4xl font-bold">Tic-Tac-Toe</h1>
       <GameInfo winner={winner} isXNext={isXNext} />
       <Board board={board} winner={winner} onSquareClick={handleClick} />
       <Button onClick={resetGame}>Reset Game</Button>

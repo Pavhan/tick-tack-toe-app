@@ -1,7 +1,7 @@
 import React from 'react';
-import { cn } from '../../lib/utils';
-import type { Player } from '../Board/Board';
-import { OIcon, XIcon } from '../Icons';
+import type { Player } from '@/components/Board/Board';
+import { OIcon, XIcon } from '@/icons';
+import { cn } from '@/lib/utils';
 
 interface BoardIconProps {
   value: Player;
@@ -14,7 +14,7 @@ export const BoardIcon: React.FC<BoardIconProps> = ({ value }) => (
       'text-red-500': value === 'O',
     })}
   >
-    {value === 'X' && <XIcon className="w-full h-full" />}
-    {value === 'O' && <OIcon className="w-full h-full" />}
+    {value === 'X' && <XIcon className="h-full w-full" />}
+    {value === 'O' && <OIcon className="h-full w-full" />}
   </span>
 );

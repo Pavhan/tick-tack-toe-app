@@ -1,6 +1,6 @@
 import React from 'react';
-import type { Winner } from '../Board/Board';
-import { BoardIcon } from '../BoardIcon/BoardButton';
+import type { Winner } from '@/components/Board/Board';
+import { BoardIcon } from '@/components/BoardIcon/BoardButton';
 
 interface GameInfoProps {
   winner: Winner;
