@@ -1,3 +1,3 @@
 # Tick Tack Toe App
 
-Onboarding app in Foxmedia App
+Onboarding app in Foxmedia company
