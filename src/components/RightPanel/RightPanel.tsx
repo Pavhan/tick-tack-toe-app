@@ -1,17 +1,35 @@
 import { useEffect, useRef, useState } from 'react';
 import { BoardSizeSelector } from '@/components/BoardSizeSelector/BoardSizeSelector';
 import { Button } from '@/components/Button/Button';
+import { HistoryMoves } from '@/components/HistoryMoves/HistoryMoves';
+import type { HistoryEntry } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 type RightPanelProps = {
   boardSize: number;
   board: (string | null)[];
   getWinLength: (size: number) => number;
+  history: HistoryEntry[];
+  currentHistoryIndex: number | null;
+  isViewingHistory: boolean;
   onBoardSizeChange: (size: number) => void;
   onResetGame: () => void;
+  onHistoryClick: (index: number) => void;
+  onContinueGame: () => void;
 };
 
-function RightPanel({ boardSize, board, getWinLength, onBoardSizeChange, onResetGame }: RightPanelProps) {
+function RightPanel({
+  boardSize,
+  board,
+  getWinLength,
+  history,
+  currentHistoryIndex,
+  isViewingHistory,
+  onBoardSizeChange,
+  onResetGame,
+  onHistoryClick,
+  onContinueGame,
+}: RightPanelProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const asideRef = useRef<HTMLElement>(null);
 
@@ -54,6 +72,22 @@ function RightPanel({ boardSize, board, getWinLength, onBoardSizeChange, onReset
         disabled={board.some((square) => square !== null)}
         onSizeChange={onBoardSizeChange}
       />
+
+      <HistoryMoves
+        history={history}
+        currentHistoryIndex={currentHistoryIndex}
+        boardSize={boardSize}
+        onHistoryClick={onHistoryClick}
+      />
+
+      {isViewingHistory && (
+        <div className="rounded border border-yellow-400 bg-yellow-50 p-3">
+          <p className="mb-2 text-xs text-yellow-800">Viewing History</p>
+          <Button onClick={onContinueGame} variant="primary" className="w-full">
+            Continue Game
+          </Button>
+        </div>
+      )}
       <Button onClick={onResetGame} variant="primary">
         Reset Game
       </Button>

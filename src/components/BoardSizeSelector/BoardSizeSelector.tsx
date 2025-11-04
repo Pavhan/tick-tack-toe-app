@@ -21,10 +21,10 @@ export const BoardSizeSelector: React.FC<BoardSizeSelectorProps> = ({
   return (
     <div className="flex grow flex-col items-start gap-4">
       <div>
-        <h3 className="text-lg font-medium text-gray-700">
+        <h3>
           Board Size: {boardSize}x{boardSize}
         </h3>
-        <p className="opacity-50">(Win with {winLength} in a row)</p>
+        <p>(win with {winLength} in a row)</p>
       </div>
       <div className="grid grid-cols-4 gap-2">
         {Array.from({ length: MAX_BOARD_SIZE - MIN_BOARD_SIZE + 1 }, (_, i) => MIN_BOARD_SIZE + i).map((size) => (
