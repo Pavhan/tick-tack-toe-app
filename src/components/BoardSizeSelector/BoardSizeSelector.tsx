@@ -19,13 +19,11 @@ export const BoardSizeSelector: React.FC<BoardSizeSelectorProps> = ({
   onSizeChange,
 }) => {
   return (
-    <div className="flex grow flex-col items-start gap-4">
-      <div>
-        <h3>
-          Board Size: {boardSize}x{boardSize}
-        </h3>
-        <p>(win with {winLength} in a row)</p>
-      </div>
+    <div>
+      <h3>
+        Board Size: {boardSize}x{boardSize}
+      </h3>
+      <p>(win with {winLength} in a row)</p>
       <div className="grid grid-cols-4 gap-2">
         {Array.from({ length: MAX_BOARD_SIZE - MIN_BOARD_SIZE + 1 }, (_, i) => MIN_BOARD_SIZE + i).map((size) => (
           <Button

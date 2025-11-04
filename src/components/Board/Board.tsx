@@ -19,7 +19,7 @@ export const Board: React.FC<BoardProps> = ({
   highlightedPosition,
   onSquareClick,
 }) => (
-  <div className="rounded-lg border-4 border-gray-600 bg-gray-100 p-2">
+  <div className="max-w-full overflow-auto rounded-lg border-4 border-gray-600 bg-gray-100 p-2">
     {Array.from({ length: boardSize }, (_, rowIndex) => (
       <div key={rowIndex} className="flex">
         {Array.from({ length: boardSize }, (_, colIndex) => {

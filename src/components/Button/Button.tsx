@@ -29,7 +29,7 @@ export const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        'cursor-pointer rounded px-3 py-1.5 font-medium transition-colors',
+        'cursor-pointer rounded px-3 py-1.5 text-sm font-medium transition-colors',
         'disabled:pointer-events-none disabled:opacity-50',
         variantStyles[variant],
         className,

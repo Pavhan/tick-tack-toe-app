@@ -59,26 +59,28 @@ function RightPanel({
         },
       )}
     >
-      <Button
-        onClick={() => setIsMenuOpen(!isMenuOpen)}
-        variant="secondary"
-        className="absolute -left-4 z-60 -translate-x-full md:hidden"
-      >
-        {isMenuOpen ? 'Close' : 'Menu'}
-      </Button>
-      <BoardSizeSelector
-        boardSize={boardSize}
-        winLength={getWinLength(boardSize)}
-        disabled={board.some((square) => square !== null)}
-        onSizeChange={onBoardSizeChange}
-      />
+      <div className="flex grow flex-col gap-4">
+        <Button
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          variant="secondary"
+          className="absolute -left-4 z-60 -translate-x-full md:hidden"
+        >
+          {isMenuOpen ? 'Close' : 'Settings'}
+        </Button>
+        <BoardSizeSelector
+          boardSize={boardSize}
+          winLength={getWinLength(boardSize)}
+          disabled={board.some((square) => square !== null)}
+          onSizeChange={onBoardSizeChange}
+        />
 
-      <HistoryMoves
-        history={history}
-        currentHistoryIndex={currentHistoryIndex}
-        boardSize={boardSize}
-        onHistoryClick={onHistoryClick}
-      />
+        <HistoryMoves
+          history={history}
+          currentHistoryIndex={currentHistoryIndex}
+          boardSize={boardSize}
+          onHistoryClick={onHistoryClick}
+        />
+      </div>
 
       {isViewingHistory && (
         <div className="rounded border border-yellow-400 bg-yellow-50 p-3">

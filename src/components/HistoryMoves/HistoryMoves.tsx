@@ -22,7 +22,7 @@ export function HistoryMoves({ history, currentHistoryIndex, boardSize, onHistor
 
   return (
     <div className="flex flex-col gap-2">
-      <h3>History moves</h3>
+      <h3>History Moves</h3>
       <ul className="flex max-h-64 flex-col gap-1 overflow-y-auto">
         {history.map((entry, index) => (
           <li key={index}>

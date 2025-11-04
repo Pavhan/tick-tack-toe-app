@@ -166,11 +166,11 @@ function App() {
 
   return (
     <>
-      <main className="flex h-full min-h-screen flex-col items-center gap-4 p-4 md:pr-52">
-        <header className="flex w-full items-center justify-between pr-20">
+      <main className="flex h-full flex-col items-center gap-4 p-4 md:pr-52">
+        <header className="flex w-full items-center justify-between pr-24">
           <h1>Tic Tac Toe Game</h1>
         </header>
-        <div className="flex grow flex-col items-center justify-center">
+        <div className="flex max-w-full grow flex-col items-center justify-center">
           <GameInfo winner={winner} isXNext={isXNext} />
           <Board
             board={board}
