@@ -57,14 +57,18 @@ export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: Sa
       ref={dialogRef}
       onClose={onClose}
       className={cn(
-        'fixed top-1/2 left-1/2 w-3xl max-w-full -translate-x-1/2 -translate-y-1/2',
-        'rounded-lg p-0 shadow-xl backdrop:bg-black/50 backdrop:backdrop-blur-xs',
+        'fixed top-1/2 left-1/2 w-3xl max-w-full -translate-x-1/2 -translate-y-1/2 p-3',
+        'bg-transparent backdrop:bg-black/50 backdrop:backdrop-blur-xs',
       )}
     >
-      <div ref={dialogContentRef}>
+      <div ref={dialogContentRef} className="rounded-lg bg-white p-0 shadow-xl">
         <div className="flex items-center justify-between border-b border-gray-200 p-3">
           <h3>Saved Games</h3>
-          <button onClick={onClose} className="cursor-pointer text-gray-400 transition-colors hover:text-gray-600">
+          <button
+            onClick={onClose}
+            type="button"
+            className="cursor-pointer text-gray-400 transition-colors hover:text-gray-600"
+          >
             <CloseIcon />
           </button>
         </div>
@@ -88,7 +92,7 @@ export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: Sa
                       getPlayerTransparentBackground(game.winner),
                     )}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
                       <div className="flex items-center gap-1 text-sm">
                         Winner is: <PlayerIcon value={game.winner} className="size-4" />
                         <span className="text-xs text-gray-500">({formatDate(game.timestamp)})</span>

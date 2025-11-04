@@ -1,12 +1,13 @@
 import React from 'react';
 import { cn } from '@/lib/utils';
 
+export type ButtonVariant = 'primary' | 'secondary' | 'danger';
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  variant?: 'primary' | 'secondary' | 'danger';
+  variant?: ButtonVariant;
   className?: string;
 }
 

@@ -21,9 +21,9 @@ export function HistoryMoves({ history, currentHistoryIndex, boardSize, onHistor
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="-mx-2 flex max-h-64 flex-col gap-2 overflow-y-auto px-2">
       <h3>History Moves</h3>
-      <ul className="flex max-h-64 flex-col gap-1 overflow-y-auto">
+      <ul className="flex flex-col gap-1">
         {history.map((entry, index) => (
           <li key={index}>
             <button

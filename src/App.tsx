@@ -5,6 +5,7 @@ import { SavedGamesDialog } from '@/components/SavedGamesDialog/SavedGamesDialog
 import { getNextPlayer } from '@/lib/constants';
 import { saveGame } from '@/lib/savedGames';
 import type { HistoryEntry, Player, SavedGame, Winner } from '@/lib/types';
+import { Alert } from './components/Alert/Alert';
 import RightPanel from './components/RightPanel/RightPanel';
 
 function App() {
@@ -18,6 +19,8 @@ function App() {
   const [previousWinner, setPreviousWinner] = useState<Winner>(null);
   const [savedGamesRefreshKey, setSavedGamesRefreshKey] = useState(0);
   const [isSavedGamesDialogOpen, setIsSavedGamesDialogOpen] = useState(false);
+
+  const isViewingHistory = currentHistoryIndex !== null;
 
   // Determine how many in a row needed to win based on board size
   const getWinLength = (size: number): number => {
@@ -213,7 +216,7 @@ function App() {
 
   return (
     <>
-      <main className="flex h-full flex-col items-center gap-4 p-4 md:pr-52">
+      <main className="flex h-full flex-col items-center gap-4 p-4 md:pr-56">
         <header className="flex w-full items-center justify-between pr-24">
           <h1>Tic Tac Toe Game</h1>
         </header>
@@ -224,11 +227,33 @@ function App() {
             board={board}
             boardSize={boardSize}
             winner={winner}
-            highlightedPosition={currentHistoryIndex !== null ? history[currentHistoryIndex]?.position : null}
-            isViewingHistory={currentHistoryIndex !== null || isViewingSavedGame}
+            highlightedPosition={isViewingHistory ? history[currentHistoryIndex]?.position : null}
+            isViewingHistory={isViewingHistory || isViewingSavedGame}
             onSquareClick={handleClick}
           />
         </div>
+
+        {isViewingHistory && !isViewingSavedGame && (
+          <Alert
+            button={{
+              text: ' Continue Game',
+              onClick: handleContinueGame,
+              variant: 'primary',
+            }}
+            description="You are viewing a game history now"
+          />
+        )}
+
+        {isViewingSavedGame && (
+          <Alert
+            button={{
+              text: 'Exit Saved Game',
+              onClick: handleContinueGame,
+              variant: 'primary',
+            }}
+            description="You are viewing a saved game now"
+          />
+        )}
       </main>
       <RightPanel
         boardSize={boardSize}
@@ -236,13 +261,10 @@ function App() {
         getWinLength={getWinLength}
         history={history}
         currentHistoryIndex={currentHistoryIndex}
-        isViewingHistory={currentHistoryIndex !== null}
-        isViewingSavedGame={isViewingSavedGame}
         winner={winner}
         onBoardSizeChange={handleBoardSizeChange}
         onResetGame={resetGame}
         onHistoryClick={handleHistoryClick}
-        onContinueGame={handleContinueGame}
         onOpenSavedGames={() => {
           setIsSavedGamesDialogOpen(true);
         }}

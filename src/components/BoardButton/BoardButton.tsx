@@ -19,6 +19,7 @@ export const BoardButton: React.FC<BoardButtonProps> = ({
   isViewingHistory = false,
 }) => (
   <button
+    type="button"
     className={cn(
       'm-0.5 flex size-8 items-center justify-center md:size-12',
       'border-2 border-neutral-400 bg-white font-bold transition-all',
