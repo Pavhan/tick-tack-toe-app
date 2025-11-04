@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/Button/Button';
-import { PlayerIcon } from '@/components/PlayerIcon/PlayerIcon';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { CloseIcon } from '@/icons';
-import { getPlayerBorderColor, getPlayerTransparentBackground } from '@/lib/constants';
 import { deleteAllGames, deleteGame, getSavedGames } from '@/lib/savedGames';
 import type { SavedGame } from '@/lib/types';
-import { cn, formatDate } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { SavedGameItem } from './SavedGameItem';
 
 type SavedGamesDialogProps = {
   isOpen: boolean;
@@ -20,16 +19,20 @@ export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: Sa
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
 
+  const loadGames = () => {
+    setSavedGames(getSavedGames());
+  };
+
   const handleDeleteGame = (gameId: string) => {
     deleteGame(gameId);
-    setSavedGames([]);
+    loadGames();
   };
 
   const handleDeleteAll = () => {
     if (savedGames.length === 0) return;
 
     deleteAllGames();
-    setSavedGames([]);
+    loadGames();
     onClose();
   };
 
@@ -44,7 +47,7 @@ export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: Sa
 
     if (isOpen) {
       dialog.showModal();
-      setSavedGames(getSavedGames());
+      loadGames();
     } else {
       dialog.close();
     }
@@ -80,36 +83,9 @@ export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: Sa
             </div>
           ) : (
             <div className="flex flex-col gap-3">
-              {savedGames.map((game) => {
-                if (!game.winner || game.winner === 'Draw') return null;
-
-                return (
-                  <div
-                    key={game.id}
-                    className={cn(
-                      'flex flex-col gap-2 rounded-lg border py-1 pr-1 pl-3',
-                      getPlayerBorderColor(game.winner),
-                      getPlayerTransparentBackground(game.winner),
-                    )}
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="flex items-center gap-1 text-sm">
-                        Winner is: <PlayerIcon value={game.winner} className="size-4" />
-                        <span className="text-xs text-gray-500">({formatDate(game.timestamp)})</span>
-                      </div>
-
-                      <div className="flex gap-2">
-                        <Button onClick={() => handleLoadGame(game)} variant="primary">
-                          Load
-                        </Button>
-                        <Button onClick={() => handleDeleteGame(game.id)} variant="danger">
-                          Delete
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {savedGames.map((game) => (
+                <SavedGameItem key={game.id} game={game} onDeleteGame={handleDeleteGame} onLoadGame={handleLoadGame} />
+              ))}
             </div>
           )}
         </div>

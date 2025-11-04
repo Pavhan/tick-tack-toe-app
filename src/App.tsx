@@ -114,7 +114,7 @@ function App() {
   useEffect(() => {
     if (winner && winner !== previousWinner && !isViewingSavedGame) {
       const gameToSave: SavedGame = {
-        id: `game_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        id: `game_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
         boardSize,
         history,
         winner,
