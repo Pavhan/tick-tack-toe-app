@@ -1,5 +1,5 @@
+import { Button, type ButtonVariant } from '@/components/Button/Button';
 import { InfoIcon } from '@/icons';
-import { Button, type ButtonVariant } from '../Button/Button';
 
 interface AlertProps {
   description: string;
