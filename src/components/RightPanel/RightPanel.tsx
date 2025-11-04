@@ -12,10 +12,12 @@ type RightPanelProps = {
   history: HistoryEntry[];
   currentHistoryIndex: number | null;
   isViewingHistory: boolean;
+  isViewingSavedGame: boolean;
   onBoardSizeChange: (size: number) => void;
   onResetGame: () => void;
   onHistoryClick: (index: number) => void;
   onContinueGame: () => void;
+  onOpenSavedGames: () => void;
 };
 
 function RightPanel({
@@ -25,10 +27,12 @@ function RightPanel({
   history,
   currentHistoryIndex,
   isViewingHistory,
+  isViewingSavedGame,
   onBoardSizeChange,
   onResetGame,
   onHistoryClick,
   onContinueGame,
+  onOpenSavedGames,
 }: RightPanelProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const asideRef = useRef<HTMLElement>(null);
@@ -59,20 +63,26 @@ function RightPanel({
         },
       )}
     >
-      <div className="flex grow flex-col gap-4">
-        <Button
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          variant="secondary"
-          className="absolute -left-4 z-60 -translate-x-full md:hidden"
-        >
-          {isMenuOpen ? 'Close' : 'Settings'}
-        </Button>
-        <BoardSizeSelector
-          boardSize={boardSize}
-          winLength={getWinLength(boardSize)}
-          disabled={board.some((square) => square !== null)}
-          onSizeChange={onBoardSizeChange}
-        />
+      <div className="grow space-y-4 divide-y divide-gray-300">
+        <div className="flex flex-col gap-4 pb-4">
+          <Button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            variant="secondary"
+            className="absolute -left-4 z-60 -translate-x-full md:hidden"
+          >
+            {isMenuOpen ? 'Close' : 'Settings'}
+          </Button>
+          <BoardSizeSelector
+            boardSize={boardSize}
+            winLength={getWinLength(boardSize)}
+            disabled={board.some((square) => square !== null)}
+            onSizeChange={onBoardSizeChange}
+          />
+
+          <Button onClick={onResetGame} variant="danger">
+            Reset Game
+          </Button>
+        </div>
 
         <HistoryMoves
           history={history}
@@ -80,18 +90,28 @@ function RightPanel({
           boardSize={boardSize}
           onHistoryClick={onHistoryClick}
         />
+
+        {isViewingHistory && !isViewingSavedGame && (
+          <div className="rounded border border-yellow-400 bg-yellow-50 p-3">
+            <p className="mb-2 text-xs text-yellow-800">Viewing History</p>
+            <Button onClick={onContinueGame} variant="primary" className="w-full">
+              Continue Game
+            </Button>
+          </div>
+        )}
       </div>
 
-      {isViewingHistory && (
+      {isViewingSavedGame && (
         <div className="rounded border border-yellow-400 bg-yellow-50 p-3">
-          <p className="mb-2 text-xs text-yellow-800">Viewing History</p>
+          <p className="mb-2 text-xs text-yellow-800">Viewing Saved Game</p>
           <Button onClick={onContinueGame} variant="primary" className="w-full">
-            Continue Game
+            Exit Saved Game
           </Button>
         </div>
       )}
-      <Button onClick={onResetGame} variant="primary">
-        Reset Game
+
+      <Button onClick={onOpenSavedGames} variant="secondary" className="w-full">
+        View Saved Games
       </Button>
     </aside>
   );

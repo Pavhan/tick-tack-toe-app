@@ -20,7 +20,7 @@ export const GameInfo: React.FC<GameInfoProps> = ({ winner, isXNext }) =>
       )}
     </p>
   ) : (
-    <p className="flex items-center justify-center gap-2 text-2xl font-bold">
+    <p className="flex items-center justify-center gap-2 text-xl font-bold">
       Next player: <PlayerIcon value={getNextPlayer(isXNext)} />
     </p>
   );

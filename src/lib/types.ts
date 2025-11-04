@@ -12,3 +12,11 @@ export type HistoryEntry = {
   position: number;
   gameState: GameState;
 };
+
+export type SavedGame = {
+  id: string;
+  boardSize: number;
+  history: HistoryEntry[];
+  winner: Winner;
+  timestamp: number;
+};

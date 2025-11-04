@@ -23,7 +23,7 @@ export const BoardSizeSelector: React.FC<BoardSizeSelectorProps> = ({
       <h3>
         Board Size: {boardSize}x{boardSize}
       </h3>
-      <p>(win with {winLength} in a row)</p>
+      <p className="text-sm">(win with {winLength} in a row)</p>
       <div className="grid grid-cols-4 gap-2">
         {Array.from({ length: MAX_BOARD_SIZE - MIN_BOARD_SIZE + 1 }, (_, i) => MIN_BOARD_SIZE + i).map((size) => (
           <Button

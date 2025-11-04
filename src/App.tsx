@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Board } from '@/components/Board/Board';
 import { GameInfo } from '@/components/GameInfo/GameInfo';
+import { SavedGamesDialog } from '@/components/SavedGamesDialog/SavedGamesDialog';
 import { getNextPlayer } from '@/lib/constants';
-import type { HistoryEntry, Player, Winner } from '@/lib/types';
+import { saveGame } from '@/lib/savedGames';
+import type { HistoryEntry, Player, SavedGame, Winner } from '@/lib/types';
 import RightPanel from './components/RightPanel/RightPanel';
 
 function App() {
@@ -12,6 +14,10 @@ function App() {
   const [winner, setWinner] = useState<Winner>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
   const [currentHistoryIndex, setCurrentHistoryIndex] = useState<number | null>(null);
+  const [isViewingSavedGame, setIsViewingSavedGame] = useState(false);
+  const [previousWinner, setPreviousWinner] = useState<Winner>(null);
+  const [savedGamesRefreshKey, setSavedGamesRefreshKey] = useState(0);
+  const [isSavedGamesDialogOpen, setIsSavedGamesDialogOpen] = useState(false);
 
   // Determine how many in a row needed to win based on board size
   const getWinLength = (size: number): number => {
@@ -103,8 +109,7 @@ function App() {
   };
 
   const handleClick = (index: number) => {
-    // Don't allow moves when viewing history
-    if (currentHistoryIndex !== null) return;
+    if (currentHistoryIndex !== null || isViewingSavedGame) return;
 
     if (board[index] || winner) return;
     const currentPlayer = getNextPlayer(isXNext);
@@ -116,7 +121,6 @@ function App() {
     setIsXNext(!isXNext);
     setWinner(gameWinner);
 
-    // Add to history
     const historyEntry: HistoryEntry = {
       player: currentPlayer,
       position: index,
@@ -135,6 +139,8 @@ function App() {
     setWinner(null);
     setHistory([]);
     setCurrentHistoryIndex(null);
+    setIsViewingSavedGame(false);
+    setPreviousWinner(null);
   };
 
   const handleBoardSizeChange = (newSize: number) => {
@@ -144,6 +150,8 @@ function App() {
     setWinner(null);
     setHistory([]);
     setCurrentHistoryIndex(null);
+    setIsViewingSavedGame(false);
+    setPreviousWinner(null);
   };
 
   const handleHistoryClick = (index: number) => {
@@ -155,6 +163,11 @@ function App() {
   };
 
   const handleContinueGame = () => {
+    if (isViewingSavedGame) {
+      resetGame();
+      return;
+    }
+
     if (history.length > 0) {
       const lastState = history[history.length - 1].gameState;
       setBoard(lastState.board);
@@ -164,12 +177,55 @@ function App() {
     setCurrentHistoryIndex(null);
   };
 
+  const handleLoadSavedGame = (game: SavedGame) => {
+    setBoardSize(game.boardSize);
+    setHistory(game.history);
+
+    if (game.history.length > 0) {
+      const finalState = game.history[game.history.length - 1].gameState;
+      setBoard(finalState.board);
+      setIsXNext(finalState.isXNext);
+      setWinner(finalState.winner);
+    } else {
+      setBoard(Array(game.boardSize * game.boardSize).fill(null));
+      setIsXNext(true);
+      setWinner(game.winner);
+    }
+
+    setCurrentHistoryIndex(null);
+    setIsViewingSavedGame(true);
+  };
+
+  const handleOpenSavedGames = () => {
+    setIsSavedGamesDialogOpen(true);
+  };
+
+  const handleCloseSavedGames = () => {
+    setIsSavedGamesDialogOpen(false);
+  };
+
+  useEffect(() => {
+    if (winner && winner !== previousWinner && !isViewingSavedGame) {
+      const gameToSave: SavedGame = {
+        id: `game_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+        boardSize,
+        history,
+        winner,
+        timestamp: Date.now(),
+      };
+      saveGame(gameToSave);
+      setSavedGamesRefreshKey((prev) => prev + 1);
+    }
+    setPreviousWinner(winner);
+  }, [winner, boardSize, history, isViewingSavedGame, previousWinner]);
+
   return (
     <>
       <main className="flex h-full flex-col items-center gap-4 p-4 md:pr-52">
         <header className="flex w-full items-center justify-between pr-24">
           <h1>Tic Tac Toe Game</h1>
         </header>
+
         <div className="flex max-w-full grow flex-col items-center justify-center">
           <GameInfo winner={winner} isXNext={isXNext} />
           <Board
@@ -177,7 +233,7 @@ function App() {
             boardSize={boardSize}
             winner={winner}
             highlightedPosition={currentHistoryIndex !== null ? history[currentHistoryIndex]?.position : null}
-            isViewingHistory={currentHistoryIndex !== null}
+            isViewingHistory={currentHistoryIndex !== null || isViewingSavedGame}
             onSquareClick={handleClick}
           />
         </div>
@@ -189,10 +245,18 @@ function App() {
         history={history}
         currentHistoryIndex={currentHistoryIndex}
         isViewingHistory={currentHistoryIndex !== null}
+        isViewingSavedGame={isViewingSavedGame}
         onBoardSizeChange={handleBoardSizeChange}
         onResetGame={resetGame}
         onHistoryClick={handleHistoryClick}
         onContinueGame={handleContinueGame}
+        onOpenSavedGames={handleOpenSavedGames}
+      />
+      <SavedGamesDialog
+        isOpen={isSavedGamesDialogOpen}
+        onClose={handleCloseSavedGames}
+        onLoadGame={handleLoadSavedGame}
+        refreshKey={savedGamesRefreshKey}
       />
     </>
   );
