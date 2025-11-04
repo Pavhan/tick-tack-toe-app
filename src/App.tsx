@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+import { AlertSection } from '@/components/Alert/AppSection';
 import { Board } from '@/components/Board/Board';
 import { GameInfo } from '@/components/GameInfo/GameInfo';
+import { PageHeader } from '@/components/PageHeader/PageHeader';
+import RightPanel from '@/components/RightPanel/RightPanel';
 import { SavedGamesDialog } from '@/components/SavedGamesDialog/SavedGamesDialog';
 import { getNextPlayer } from '@/lib/constants';
 import { checkWinner, getWinLength } from '@/lib/gameLogic';
 import { saveGame } from '@/lib/savedGames';
 import type { HistoryEntry, Player, SavedGame, Winner } from '@/lib/types';
-import { Alert } from './components/Alert/Alert';
-import RightPanel from './components/RightPanel/RightPanel';
 
 function App() {
   const [boardSize, setBoardSize] = useState(3);
@@ -20,7 +21,6 @@ function App() {
   const [previousWinner, setPreviousWinner] = useState<Winner>(null);
   const [savedGamesRefreshKey, setSavedGamesRefreshKey] = useState(0);
   const [isSavedGamesDialogOpen, setIsSavedGamesDialogOpen] = useState(false);
-
   const isViewingHistory = currentHistoryIndex !== null;
 
   const handleClick = (index: number) => {
@@ -129,9 +129,7 @@ function App() {
   return (
     <>
       <main className="flex h-full flex-col items-center gap-4 p-4 md:pr-56">
-        <header className="flex w-full items-center justify-between pr-24">
-          <h1>Tic Tac Toe Game</h1>
-        </header>
+        <PageHeader />
 
         <div className="flex max-w-full grow flex-col items-center justify-center">
           <GameInfo winner={winner} isXNext={isXNext} />
@@ -145,27 +143,11 @@ function App() {
           />
         </div>
 
-        {isViewingHistory && !isViewingSavedGame && (
-          <Alert
-            button={{
-              text: 'Continue Game',
-              onClick: handleContinueGame,
-              variant: 'primary',
-            }}
-            description="You are viewing a game history now"
-          />
-        )}
-
-        {isViewingSavedGame && (
-          <Alert
-            button={{
-              text: 'Exit Saved Game',
-              onClick: handleContinueGame,
-              variant: 'primary',
-            }}
-            description="You are viewing a saved game now"
-          />
-        )}
+        <AlertSection
+          isViewingHistory={isViewingHistory}
+          isViewingSavedGame={isViewingSavedGame}
+          handleContinueGame={handleContinueGame}
+        />
       </main>
       <RightPanel
         boardSize={boardSize}
