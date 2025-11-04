@@ -196,14 +196,6 @@ function App() {
     setIsViewingSavedGame(true);
   };
 
-  const handleOpenSavedGames = () => {
-    setIsSavedGamesDialogOpen(true);
-  };
-
-  const handleCloseSavedGames = () => {
-    setIsSavedGamesDialogOpen(false);
-  };
-
   useEffect(() => {
     if (winner && winner !== previousWinner && !isViewingSavedGame) {
       const gameToSave: SavedGame = {
@@ -246,15 +238,20 @@ function App() {
         currentHistoryIndex={currentHistoryIndex}
         isViewingHistory={currentHistoryIndex !== null}
         isViewingSavedGame={isViewingSavedGame}
+        winner={winner}
         onBoardSizeChange={handleBoardSizeChange}
         onResetGame={resetGame}
         onHistoryClick={handleHistoryClick}
         onContinueGame={handleContinueGame}
-        onOpenSavedGames={handleOpenSavedGames}
+        onOpenSavedGames={() => {
+          setIsSavedGamesDialogOpen(true);
+        }}
       />
       <SavedGamesDialog
         isOpen={isSavedGamesDialogOpen}
-        onClose={handleCloseSavedGames}
+        onClose={() => {
+          setIsSavedGamesDialogOpen(false);
+        }}
         onLoadGame={handleLoadSavedGame}
         refreshKey={savedGamesRefreshKey}
       />

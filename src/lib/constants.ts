@@ -8,15 +8,15 @@ export const PLAYERS = {
 export const PLAYER_CONFIG = {
   [PLAYERS.X]: {
     value: 'X' as Player,
-    color: 'text-blue-500',
-    borderColor: 'border-blue-500',
-    transparentBackground: 'bg-blue-500/10',
+    color: 'text-indigo-500',
+    borderColor: 'border-indigo-500',
+    transparentBackground: 'bg-indigo-500/10',
   },
   [PLAYERS.O]: {
     value: 'O' as Player,
-    color: 'text-red-500',
-    borderColor: 'border-red-500',
-    transparentBackground: 'bg-red-500/10',
+    color: 'text-pink-500',
+    borderColor: 'border-pink-500',
+    transparentBackground: 'bg-pink-500/10',
   },
 } as const;
 

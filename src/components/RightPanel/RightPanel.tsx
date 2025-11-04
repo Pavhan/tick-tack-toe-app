@@ -1,8 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { BoardSizeSelector } from '@/components/BoardSizeSelector/BoardSizeSelector';
 import { Button } from '@/components/Button/Button';
 import { HistoryMoves } from '@/components/HistoryMoves/HistoryMoves';
-import type { HistoryEntry } from '@/lib/types';
+import { useClickOutside } from '@/hooks/useClickOutside';
+import type { HistoryEntry, Winner } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 type RightPanelProps = {
@@ -13,6 +14,7 @@ type RightPanelProps = {
   currentHistoryIndex: number | null;
   isViewingHistory: boolean;
   isViewingSavedGame: boolean;
+  winner: Winner;
   onBoardSizeChange: (size: number) => void;
   onResetGame: () => void;
   onHistoryClick: (index: number) => void;
@@ -28,6 +30,7 @@ function RightPanel({
   currentHistoryIndex,
   isViewingHistory,
   isViewingSavedGame,
+  winner,
   onBoardSizeChange,
   onResetGame,
   onHistoryClick,
@@ -37,18 +40,7 @@ function RightPanel({
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const asideRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (asideRef.current && !asideRef.current.contains(event.target as Node) && isMenuOpen) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isMenuOpen]);
+  useClickOutside(asideRef, () => setIsMenuOpen(false), isMenuOpen);
 
   return (
     <aside
@@ -79,8 +71,8 @@ function RightPanel({
             onSizeChange={onBoardSizeChange}
           />
 
-          <Button onClick={onResetGame} variant="danger">
-            Reset Game
+          <Button onClick={onResetGame} variant={winner ? 'primary' : 'danger'}>
+            {winner ? 'New Game' : 'Reset Game'}
           </Button>
         </div>
 

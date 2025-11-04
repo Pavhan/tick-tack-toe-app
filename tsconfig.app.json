@@ -29,6 +29,7 @@
     "paths": {
       "@/components/*": ["src/components/*"],
       "@/lib/*": ["src/lib/*"],
+      "@/hooks/*": ["src/hooks/*"],
       "@/icons": ["src/components/Icons/index.ts"],
       "@/icons/*": ["src/components/Icons/*"]
     }
