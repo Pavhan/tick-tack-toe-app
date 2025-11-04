@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { BoardSizeSelector } from '@/components/BoardSizeSelector/BoardSizeSelector';
-import { Button } from '@/components/Button/Button';
+import { Board } from '@/components/Board/Board';
 import { GameInfo } from '@/components/GameInfo/GameInfo';
 import { getNextPlayer } from '@/lib/constants';
-import { Board } from './components/Board/Board';
-import type { Player, Winner } from './lib/types';
+import type { Player, Winner } from '@/lib/types';
+import RightPanel from './components/RightPanel/RightPanel';
 
 function App() {
   const [boardSize, setBoardSize] = useState(3);
@@ -127,30 +126,24 @@ function App() {
   };
 
   return (
-    <div className="grid min-h-screen w-full grid-rows-[1fr_auto] flex-col md:grid-cols-[1fr_auto] md:flex-row">
-      <main className="flex grow flex-col items-center gap-4 p-4">
-        <header>
-          <h1 className="text-4xl font-bold">Tic Tac Toe Game</h1>
+    <>
+      <main className="flex h-full min-h-screen flex-col items-center gap-4 p-4 md:pr-52">
+        <header className="flex w-full items-center justify-between pr-20">
+          <h1 className="text-2xl font-bold md:text-4xl">Tic Tac Toe Game</h1>
         </header>
-        <div className="flex grow flex-col justify-center">
+        <div className="flex grow flex-col items-center justify-center">
           <GameInfo winner={winner} isXNext={isXNext} />
           <Board board={board} boardSize={boardSize} winner={winner} onSquareClick={handleClick} />
         </div>
-        <footer>
-          <Button onClick={resetGame} variant="primary">
-            Reset Game
-          </Button>
-        </footer>
       </main>
-      <aside className="border-t border-gray-300 bg-neutral-200 p-2 md:border-t-0 md:border-l">
-        <BoardSizeSelector
-          boardSize={boardSize}
-          winLength={getWinLength(boardSize)}
-          disabled={board.some((square) => square !== null)}
-          onSizeChange={handleBoardSizeChange}
-        />
-      </aside>
-    </div>
+      <RightPanel
+        boardSize={boardSize}
+        board={board}
+        getWinLength={getWinLength}
+        onBoardSizeChange={handleBoardSizeChange}
+        onResetGame={resetGame}
+      />
+    </>
   );
 }
 
