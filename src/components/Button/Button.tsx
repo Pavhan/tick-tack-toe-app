@@ -1,25 +1,26 @@
-import React from 'react';
+import type { MouseEvent, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'danger';
+const ButtonVariant = {
+  Primary: 'primary',
+  Secondary: 'secondary',
+  Danger: 'danger',
+} as const;
+
+type ButtonVariant = (typeof ButtonVariant)[keyof typeof ButtonVariant];
+
 interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  children: ReactNode;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
   variant?: ButtonVariant;
   className?: string;
 }
 
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  onClick,
-  type = 'button',
-  disabled = false,
-  variant = 'primary',
-  className,
-}) => {
-  const variantStyles = {
+const Button = (props: ButtonProps) => {
+  const { children, onClick, type = 'button', disabled = false, variant = 'primary', className } = props;
+  const variantStyles: Record<ButtonVariant, string> = {
     primary: 'bg-blue-500 text-white hover:bg-blue-600',
     secondary: 'border-1 border-gray-300 bg-white text-gray-700 hover:bg-gray-200',
     danger: 'bg-red-700 text-white hover:bg-red-800',
@@ -41,3 +42,5 @@ export const Button: React.FC<ButtonProps> = ({
     </button>
   );
 };
+
+export default Button;

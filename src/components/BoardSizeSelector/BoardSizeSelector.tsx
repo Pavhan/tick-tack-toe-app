@@ -1,5 +1,4 @@
-import React from 'react';
-import { Button } from '@/components/Button/Button';
+import Button from '@/components/Button/Button';
 import { cn } from '@/lib/utils';
 
 const MIN_BOARD_SIZE = 3;
@@ -12,12 +11,9 @@ interface BoardSizeSelectorProps {
   onSizeChange: (size: number) => void;
 }
 
-export const BoardSizeSelector: React.FC<BoardSizeSelectorProps> = ({
-  boardSize,
-  winLength,
-  disabled,
-  onSizeChange,
-}) => {
+const BoardSizeSelector = (props: BoardSizeSelectorProps) => {
+  const { boardSize, winLength, disabled, onSizeChange } = props;
+
   return (
     <div>
       <h3>
@@ -42,3 +38,5 @@ export const BoardSizeSelector: React.FC<BoardSizeSelectorProps> = ({
     </div>
   );
 };
+
+export default BoardSizeSelector;

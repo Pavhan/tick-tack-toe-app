@@ -1,5 +1,5 @@
-import { Button } from '@/components/Button/Button';
-import { PlayerIcon } from '@/components/PlayerIcon/PlayerIcon';
+import Button from '@/components/Button/Button';
+import PlayerIcon from '@/components/PlayerIcon/PlayerIcon';
 import { getPlayerBorderColor, getPlayerTransparentBackground } from '@/lib/constants';
 import type { SavedGame } from '@/lib/types';
 import { cn, formatDate } from '@/lib/utils';
@@ -10,7 +10,9 @@ type SavedGameItemProps = {
   onLoadGame: (game: SavedGame) => void;
 };
 
-export function SavedGameItem({ game, onDeleteGame, onLoadGame }: SavedGameItemProps) {
+const SavedGameItem = (props: SavedGameItemProps) => {
+  const { game, onDeleteGame, onLoadGame } = props;
+
   if (!game.winner || game.winner === 'Draw') return null;
 
   return (
@@ -39,4 +41,6 @@ export function SavedGameItem({ game, onDeleteGame, onLoadGame }: SavedGameItemP
       </div>
     </div>
   );
-}
+};
+
+export default SavedGameItem;

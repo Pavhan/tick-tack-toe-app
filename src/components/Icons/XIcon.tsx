@@ -1,6 +1,6 @@
-import { type SVGProps } from 'react';
+import type { SVGProps } from 'react';
 
-export function XIcon(props: SVGProps<SVGSVGElement>) {
+export const XIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
@@ -12,4 +12,4 @@ export function XIcon(props: SVGProps<SVGSVGElement>) {
       />
     </svg>
   );
-}
+};

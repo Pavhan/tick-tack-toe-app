@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { AlertSection } from '@/components/Alert/AppSection';
-import { Board } from '@/components/Board/Board';
-import { GameInfo } from '@/components/GameInfo/GameInfo';
-import { PageHeader } from '@/components/PageHeader/PageHeader';
+import AlertSection from '@/components/Alert/AppSection';
+import Board from '@/components/Board/Board';
+import GameInfo from '@/components/GameInfo/GameInfo';
+import PageHeader from '@/components/PageHeader/PageHeader';
 import RightPanel from '@/components/RightPanel/RightPanel';
-import { SavedGamesDialog } from '@/components/SavedGamesDialog/SavedGamesDialog';
+import SavedGamesDialog from '@/components/SavedGamesDialog/SavedGamesDialog';
 import { getNextPlayer } from '@/lib/constants';
 import { checkWinner, getWinLength } from '@/lib/gameLogic';
 import { saveGame } from '@/lib/savedGames';
@@ -22,6 +22,21 @@ function App() {
   const [savedGamesRefreshKey, setSavedGamesRefreshKey] = useState(0);
   const [isSavedGamesDialogOpen, setIsSavedGamesDialogOpen] = useState(false);
   const isViewingHistory = currentHistoryIndex !== null;
+
+  useEffect(() => {
+    if (winner && winner !== previousWinner && !isViewingSavedGame) {
+      const gameToSave: SavedGame = {
+        id: `game_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
+        boardSize,
+        history,
+        winner,
+        timestamp: Date.now(),
+      };
+      saveGame(gameToSave);
+      setSavedGamesRefreshKey((prev) => prev + 1);
+    }
+    setPreviousWinner(winner);
+  }, [winner, boardSize, history, isViewingSavedGame, previousWinner]);
 
   const handleClick = (index: number) => {
     if (currentHistoryIndex !== null || isViewingSavedGame) return;
@@ -118,21 +133,6 @@ function App() {
     setCurrentHistoryIndex(null);
     setIsViewingSavedGame(true);
   };
-
-  useEffect(() => {
-    if (winner && winner !== previousWinner && !isViewingSavedGame) {
-      const gameToSave: SavedGame = {
-        id: `game_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
-        boardSize,
-        history,
-        winner,
-        timestamp: Date.now(),
-      };
-      saveGame(gameToSave);
-      setSavedGamesRefreshKey((prev) => prev + 1);
-    }
-    setPreviousWinner(winner);
-  }, [winner, boardSize, history, isViewingSavedGame, previousWinner]);
 
   return (
     <>

@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button } from '@/components/Button/Button';
+import Button from '@/components/Button/Button';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { CloseIcon } from '@/icons';
 import { deleteAllGames, deleteGame, getSavedGames } from '@/lib/savedGames';
 import type { SavedGame } from '@/lib/types';
 import { cn } from '@/lib/utils';
-import { SavedGameItem } from './SavedGameItem';
+import SavedGameItem from './SavedGameItem';
 
 type SavedGamesDialogProps = {
   isOpen: boolean;
@@ -14,10 +14,25 @@ type SavedGamesDialogProps = {
   refreshKey: number;
 };
 
-export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: SavedGamesDialogProps) {
+const SavedGamesDialog = (props: SavedGamesDialogProps) => {
+  const { isOpen, onClose, onLoadGame, refreshKey } = props;
   const [savedGames, setSavedGames] = useState<SavedGame[]>([]);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    if (isOpen) {
+      dialog.showModal();
+      loadGames();
+    } else {
+      dialog.close();
+    }
+  }, [isOpen, refreshKey]);
+
+  useClickOutside(dialogContentRef, onClose, isOpen);
 
   const loadGames = () => {
     setSavedGames(getSavedGames());
@@ -40,20 +55,6 @@ export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: Sa
     onLoadGame(game);
     onClose();
   };
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-
-    if (isOpen) {
-      dialog.showModal();
-      loadGames();
-    } else {
-      dialog.close();
-    }
-  }, [isOpen, refreshKey]);
-
-  useClickOutside(dialogContentRef, onClose, isOpen);
 
   return (
     <dialog
@@ -100,4 +101,6 @@ export function SavedGamesDialog({ isOpen, onClose, onLoadGame, refreshKey }: Sa
       </div>
     </dialog>
   );
-}
+};
+
+export default SavedGamesDialog;

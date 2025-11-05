@@ -1,4 +1,4 @@
-import { Alert } from './Alert';
+import Alert from './Alert';
 
 type AlertSectionProps = {
   isViewingHistory: boolean;
@@ -6,7 +6,9 @@ type AlertSectionProps = {
   handleContinueGame: () => void;
 };
 
-export function AlertSection({ isViewingHistory, isViewingSavedGame, handleContinueGame }: AlertSectionProps) {
+const AlertSection = (props: AlertSectionProps) => {
+  const { isViewingHistory, isViewingSavedGame, handleContinueGame } = props;
+
   return (
     <>
       {isViewingHistory && !isViewingSavedGame && (
@@ -32,4 +34,6 @@ export function AlertSection({ isViewingHistory, isViewingSavedGame, handleConti
       )}
     </>
   );
-}
+};
+
+export default AlertSection;

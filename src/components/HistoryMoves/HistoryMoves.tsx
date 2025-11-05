@@ -9,7 +9,9 @@ type HistoryMovesProps = {
   onHistoryClick: (index: number) => void;
 };
 
-export function HistoryMoves({ history, currentHistoryIndex, boardSize, onHistoryClick }: HistoryMovesProps) {
+const HistoryMoves = (props: HistoryMovesProps) => {
+  const { history, currentHistoryIndex, boardSize, onHistoryClick } = props;
+
   const getPositionLabel = (position: number): string => {
     const row = Math.floor(position / boardSize) + 1;
     const col = (position % boardSize) + 1;
@@ -46,4 +48,6 @@ export function HistoryMoves({ history, currentHistoryIndex, boardSize, onHistor
       </ul>
     </div>
   );
-}
+};
+
+export default HistoryMoves;

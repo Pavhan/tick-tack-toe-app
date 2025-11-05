@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
-import { BoardSizeSelector } from '@/components/BoardSizeSelector/BoardSizeSelector';
-import { Button } from '@/components/Button/Button';
-import { HistoryMoves } from '@/components/HistoryMoves/HistoryMoves';
+import BoardSizeSelector from '@/components/BoardSizeSelector/BoardSizeSelector';
+import Button from '@/components/Button/Button';
+import HistoryMoves from '@/components/HistoryMoves/HistoryMoves';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import type { HistoryEntry, Winner } from '@/lib/types';
 import { cn } from '@/lib/utils';

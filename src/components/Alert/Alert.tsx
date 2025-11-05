@@ -1,4 +1,5 @@
-import { Button, type ButtonVariant } from '@/components/Button/Button';
+import Button from '@/components/Button/Button';
+import type { ButtonVariant } from '@/components/Button/Button';
 import { InfoIcon } from '@/icons';
 import { cn } from '@/lib/utils';
 
@@ -11,7 +12,9 @@ interface AlertProps {
   };
 }
 
-export function Alert({ description, button }: AlertProps) {
+const Alert = (props: AlertProps) => {
+  const { description, button } = props;
+
   return (
     <div
       className={cn(
@@ -30,4 +33,6 @@ export function Alert({ description, button }: AlertProps) {
       </Button>
     </div>
   );
-}
+};
+
+export default Alert;
