@@ -92,6 +92,14 @@ function App() {
     setCurrentHistoryIndex(null);
   };
 
+  const handleOpenSavedGames = () => {
+    setIsSavedGamesDialogOpen(true);
+  };
+
+  const handleCloseSavedGames = () => {
+    setIsSavedGamesDialogOpen(false);
+  };
+
   const handleLoadSavedGame = (game: SavedGame) => {
     setBoardSize(game.boardSize);
     setHistory(game.history);
@@ -159,15 +167,11 @@ function App() {
         onBoardSizeChange={handleBoardSizeChange}
         onResetGame={resetGame}
         onHistoryClick={handleHistoryClick}
-        onOpenSavedGames={() => {
-          setIsSavedGamesDialogOpen(true);
-        }}
+        onOpenSavedGames={handleOpenSavedGames}
       />
       <SavedGamesDialog
         isOpen={isSavedGamesDialogOpen}
-        onClose={() => {
-          setIsSavedGamesDialogOpen(false);
-        }}
+        onClose={handleCloseSavedGames}
         onLoadGame={handleLoadSavedGame}
         refreshKey={savedGamesRefreshKey}
       />
