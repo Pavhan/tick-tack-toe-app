@@ -30,7 +30,8 @@ export function HistoryMoves({ history, currentHistoryIndex, boardSize, onHistor
               onClick={() => onHistoryClick(index)}
               title={`Go to move ${index + 1}`}
               className={cn(
-                'w-full cursor-pointer rounded bg-gray-100 px-2 py-1 text-left text-xs transition-colors hover:bg-white',
+                'w-full cursor-pointer rounded px-2 py-1 text-left text-xs',
+                'bg-gray-100 transition-colors hover:bg-white',
                 {
                   'bg-blue-100 font-semibold hover:bg-blue-200': currentHistoryIndex === index,
                 },
