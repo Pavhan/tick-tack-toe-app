@@ -1,13 +1,13 @@
 import type { RefObject } from 'react';
 import { useEffect } from 'react';
 
-type useClickOutsideProps<T> = {
+type UseClickOutsideProps<T> = {
   ref: RefObject<T | null>;
   handler: () => void;
   enabled?: boolean;
 };
 
-export const useClickOutside = <T extends HTMLElement>(props: useClickOutsideProps<T>) => {
+export const useClickOutside = <T extends HTMLElement>(props: UseClickOutsideProps<T>) => {
   const { ref, handler, enabled = true } = props;
 
   useEffect(() => {

@@ -1,10 +1,10 @@
-export const Player = {
+export const PlayerValues = {
   X: 'X',
   O: 'O',
   None: null,
 } as const;
 
-export type Player = (typeof Player)[keyof typeof Player];
+export type Player = (typeof PlayerValues)[keyof typeof PlayerValues];
 export type Winner = Player | 'Draw' | null;
 
 export type GameState = {

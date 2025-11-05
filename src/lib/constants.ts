@@ -1,13 +1,14 @@
-import { Player } from './types';
+import { PlayerValues } from './types';
+import type { Player } from './types';
 
 export const PLAYER_CONFIG = {
-  [Player.X]: {
+  [PlayerValues.X]: {
     value: 'X' as Player,
     color: 'text-amber-500',
     borderColor: 'border-amber-500',
     transparentBackground: 'bg-amber-500/10',
   },
-  [Player.O]: {
+  [PlayerValues.O]: {
     value: 'O' as Player,
     color: 'text-cyan-500',
     borderColor: 'border-cyan-500',
@@ -16,23 +17,23 @@ export const PLAYER_CONFIG = {
 } as const;
 
 export const getNextPlayer = (isXNext: boolean): Player => {
-  return isXNext ? Player.X : Player.O;
+  return isXNext ? PlayerValues.X : PlayerValues.O;
 };
 
 export const getPlayerColor = (player: Player): string => {
-  if (player === Player.X) return PLAYER_CONFIG.X.color;
-  if (player === Player.O) return PLAYER_CONFIG.O.color;
+  if (player === PlayerValues.X) return PLAYER_CONFIG.X.color;
+  if (player === PlayerValues.O) return PLAYER_CONFIG.O.color;
   return '';
 };
 
 export const getPlayerBorderColor = (player: Player): string => {
-  if (player === Player.X) return PLAYER_CONFIG.X.borderColor;
-  if (player === Player.O) return PLAYER_CONFIG.O.borderColor;
+  if (player === PlayerValues.X) return PLAYER_CONFIG.X.borderColor;
+  if (player === PlayerValues.O) return PLAYER_CONFIG.O.borderColor;
   return '';
 };
 
 export const getPlayerTransparentBackground = (player: Player): string => {
-  if (player === Player.X) return PLAYER_CONFIG.X.transparentBackground;
-  if (player === Player.O) return PLAYER_CONFIG.O.transparentBackground;
+  if (player === PlayerValues.X) return PLAYER_CONFIG.X.transparentBackground;
+  if (player === PlayerValues.O) return PLAYER_CONFIG.O.transparentBackground;
   return '';
 };

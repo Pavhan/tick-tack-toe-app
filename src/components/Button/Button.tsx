@@ -1,13 +1,13 @@
 import type { MouseEvent, ReactNode } from 'react';
 import { cn } from '@/lib/utils';
 
-const ButtonVariant = {
+const _ButtonVariantValues = {
   Primary: 'primary',
   Secondary: 'secondary',
   Danger: 'danger',
 } as const;
 
-export type ButtonVariant = (typeof ButtonVariant)[keyof typeof ButtonVariant];
+export type ButtonVariant = (typeof _ButtonVariantValues)[keyof typeof _ButtonVariantValues];
 
 interface ButtonProps {
   children: ReactNode;
