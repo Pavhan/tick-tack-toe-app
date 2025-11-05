@@ -32,7 +32,7 @@ const SavedGamesDialog = (props: SavedGamesDialogProps) => {
     }
   }, [isOpen, refreshKey]);
 
-  useClickOutside(dialogContentRef, onClose, isOpen);
+  useClickOutside({ ref: dialogContentRef, handler: onClose, enabled: isOpen });
 
   const loadGames = () => {
     setSavedGames(getSavedGames());

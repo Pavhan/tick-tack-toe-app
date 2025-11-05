@@ -19,22 +19,23 @@ type RightPanelProps = {
   onOpenSavedGames: () => void;
 };
 
-function RightPanel({
-  boardSize,
-  board,
-  getWinLength,
-  history,
-  currentHistoryIndex,
-  winner,
-  onBoardSizeChange,
-  onResetGame,
-  onHistoryClick,
-  onOpenSavedGames,
-}: RightPanelProps) {
+const RightPanel = (props: RightPanelProps) => {
+  const {
+    boardSize,
+    board,
+    getWinLength,
+    history,
+    currentHistoryIndex,
+    winner,
+    onBoardSizeChange,
+    onResetGame,
+    onHistoryClick,
+    onOpenSavedGames,
+  } = props;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const asideRef = useRef<HTMLElement>(null);
 
-  useClickOutside(asideRef, () => setIsMenuOpen(false), isMenuOpen);
+  useClickOutside({ ref: asideRef, handler: () => setIsMenuOpen(false), enabled: isMenuOpen });
 
   return (
     <aside
@@ -83,6 +84,6 @@ function RightPanel({
       </Button>
     </aside>
   );
-}
+};
 
 export default RightPanel;

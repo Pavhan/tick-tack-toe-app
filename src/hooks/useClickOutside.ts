@@ -1,11 +1,15 @@
 import type { RefObject } from 'react';
 import { useEffect } from 'react';
 
-export function useClickOutside<T extends HTMLElement>(
-  ref: RefObject<T | null>,
-  handler: () => void,
-  enabled: boolean = true,
-) {
+type useClickOutsideProps<T> = {
+  ref: RefObject<T | null>;
+  handler: () => void;
+  enabled?: boolean;
+};
+
+export const useClickOutside = <T extends HTMLElement>(props: useClickOutsideProps<T>) => {
+  const { ref, handler, enabled = true } = props;
+
   useEffect(() => {
     if (!enabled) return;
 
@@ -20,4 +24,4 @@ export function useClickOutside<T extends HTMLElement>(
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref, handler, enabled]);
-}
+};
