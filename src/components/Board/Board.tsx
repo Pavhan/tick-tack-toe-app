@@ -1,8 +1,8 @@
 import BoardButton from '@/components/BoardButton';
-import type { Player, Winner } from '@/lib/types';
+import type { BoardCell, Winner } from '@/lib/types';
 
 interface BoardProps {
-  board: Player[];
+  board: BoardCell[];
   boardSize: number;
   winner: Winner;
   isViewingHistory: boolean;

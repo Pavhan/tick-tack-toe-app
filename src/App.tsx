@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
+import { transformWinnerToBackend } from '@/api/transformers';
 import { AlertSection } from '@/components/Alert';
 import Board from '@/components/Board';
+import { ErrorMessage } from '@/components/ErrorMessage';
 import GameInfo from '@/components/GameInfo';
 import PageHeader from '@/components/PageHeader';
 import RightPanel from '@/components/RightPanel';
 import SavedGamesDialog from '@/components/SavedGamesDialog';
+import { useGame } from '@/hooks/useGame';
 import { getNextPlayer } from '@/lib/constants';
 import { checkWinner, getWinLength } from '@/lib/gameLogic';
-import { saveGame } from '@/lib/savedGames';
-import type { HistoryEntry, Player, SavedGame, Winner } from '@/lib/types';
+import type { BoardCell, HistoryEntry, SavedGame, Winner } from '@/lib/types';
 
 function App() {
   const [boardSize, setBoardSize] = useState(3);
-  const [board, setBoard] = useState<Player[]>(Array(boardSize * boardSize).fill(null));
+  const [board, setBoard] = useState<BoardCell[]>(Array(boardSize * boardSize).fill(null));
   const [isXNext, setIsXNext] = useState(true);
   const [winner, setWinner] = useState<Winner>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -21,28 +23,39 @@ function App() {
   const [previousWinner, setPreviousWinner] = useState<Winner>(null);
   const [savedGamesRefreshKey, setSavedGamesRefreshKey] = useState(0);
   const [isSavedGamesDialogOpen, setIsSavedGamesDialogOpen] = useState(false);
+  const [currentGameId, setCurrentGameId] = useState<number | null>(null);
+  const { createGame, addMove, error, clearError, updateGame } = useGame();
   const isViewingHistory = currentHistoryIndex !== null;
 
   useEffect(() => {
-    if (winner && winner !== previousWinner && !isViewingSavedGame) {
-      const gameToSave: SavedGame = {
-        id: `game_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`,
-        boardSize,
-        history,
-        winner,
-        timestamp: Date.now(),
-      };
-      saveGame(gameToSave);
+    const initGame = async () => {
+      if (!isViewingSavedGame && !isViewingHistory) {
+        const gameId = await createGame(boardSize);
+        setCurrentGameId(gameId);
+      }
+    };
+    initGame();
+  }, [boardSize, isViewingSavedGame, isViewingHistory]);
+
+  useEffect(() => {
+    if (winner && winner !== previousWinner && !isViewingSavedGame && currentGameId) {
+      updateGame(currentGameId, {
+        status: 'completed',
+        winner: transformWinnerToBackend(winner),
+      });
       setSavedGamesRefreshKey((prev) => prev + 1);
     }
     setPreviousWinner(winner);
-  }, [winner, boardSize, history, isViewingSavedGame, previousWinner]);
+  }, [winner, boardSize, history, isViewingSavedGame, previousWinner, currentGameId, updateGame]);
 
-  const handleClick = (index: number) => {
+  const handleClick = async (index: number) => {
     if (currentHistoryIndex !== null || isViewingSavedGame) return;
 
     if (board[index] || winner) return;
     const currentPlayer = getNextPlayer(isXNext);
+
+    if (currentPlayer === null) return;
+
     const newBoard = [...board];
     newBoard[index] = currentPlayer;
     const gameWinner = checkWinner(newBoard, boardSize);
@@ -61,9 +74,27 @@ function App() {
       },
     };
     setHistory([...history, historyEntry]);
+
+    if (currentGameId) {
+      const success = await addMove(currentGameId, index, currentPlayer);
+      if (!success) {
+        setBoard(board);
+        setIsXNext(isXNext);
+        setWinner(winner);
+        setHistory(history);
+        return;
+      }
+
+      if (gameWinner) {
+        await updateGame(currentGameId, {
+          status: 'completed',
+          winner: transformWinnerToBackend(gameWinner),
+        });
+      }
+    }
   };
 
-  const resetGame = () => {
+  const resetGame = async () => {
     setBoard(Array(boardSize * boardSize).fill(null));
     setIsXNext(true);
     setWinner(null);
@@ -71,9 +102,12 @@ function App() {
     setCurrentHistoryIndex(null);
     setIsViewingSavedGame(false);
     setPreviousWinner(null);
+
+    const gameId = await createGame(boardSize);
+    setCurrentGameId(gameId);
   };
 
-  const handleBoardSizeChange = (newSize: number) => {
+  const handleBoardSizeChange = async (newSize: number) => {
     setBoardSize(newSize);
     setBoard(Array(newSize * newSize).fill(null));
     setIsXNext(true);
@@ -82,6 +116,9 @@ function App() {
     setCurrentHistoryIndex(null);
     setIsViewingSavedGame(false);
     setPreviousWinner(null);
+
+    const gameId = await createGame(newSize);
+    setCurrentGameId(gameId);
   };
 
   const handleHistoryClick = (index: number) => {
@@ -156,6 +193,8 @@ function App() {
           isViewingSavedGame={isViewingSavedGame}
           handleContinueGame={handleContinueGame}
         />
+
+        {error && <ErrorMessage message={error} onRetry={clearError} />}
       </main>
       <RightPanel
         boardSize={boardSize}

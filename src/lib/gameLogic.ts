@@ -1,4 +1,4 @@
-import type { Player, Winner } from './types';
+import type { BoardCell, Winner } from './types';
 
 // Determine how many in a row needed to win based on board size
 export const getWinLength = (size: number): number => {
@@ -7,7 +7,7 @@ export const getWinLength = (size: number): number => {
   return 5;
 };
 
-export const checkWinner = (squares: Player[], size: number): Winner => {
+export const checkWinner = (squares: BoardCell[], size: number): Winner => {
   const winLength = getWinLength(size);
 
   // Check rows

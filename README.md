@@ -28,11 +28,23 @@ A feature-rich, modern Tic-Tac-Toe game built with React, TypeScript, and Tailwi
 
 ## 🛠️ Tech Stack
 
+### Frontend
+
 - **React 19** - Latest React with modern hooks
 - **TypeScript** - Type-safe code for better development experience
 - **Vite** - Lightning-fast build tool and dev server
 - **Tailwind CSS v4** - Utility-first CSS framework
-- **LocalStorage** - Persistent game saves
+
+### Backend
+
+- **Node.js** with **Express.js** - RESTful API server
+- **SQLite** (better-sqlite3) - Lightweight database
+- **TypeScript** - Type-safe backend code
+
+### Data Persistence
+
+- **Backend API** - Game state and move history
+- **LocalStorage** - Legacy support for saved games
 
 ## 📦 Installation
 
@@ -44,24 +56,60 @@ git clone https://github.com/Pavhan/tick-tack-toe-app.git
 cd tick-tack-toe-app
 
 # Install dependencies
-npm install
+yarn install
 ```
 
 ## 🚀 Usage
 
-```bash
-# Start the development server
-npm run dev
+### Development Mode
 
-# Build for production
-npm run build
+```bash
+# Start both frontend and backend
+yarn dev
+
+# Or start them separately:
+yarn dev:client    # Frontend only (http://localhost:5173)
+yarn dev:server    # Backend only (http://localhost:3001)
+```
+
+### Production Build
+
+```bash
+# Build frontend
+yarn build
+
+# Build backend
+yarn build:server
+
+# Start production server
+yarn start:server
+```
+
+### Other Commands
+
+```bash
+# Run linter
+yarn lint
 
 # Preview production build
-npm run preview
-
-# Run linter
-npm run lint
+yarn preview
 ```
+
+## 🔌 API Documentation
+
+The backend API provides RESTful endpoints for game management. See [server/API.md](./server/API.md) for complete documentation.
+
+**Base URL:** `http://localhost:3001/api`
+
+**Key Endpoints:**
+
+- `GET /games` - List all games
+- `POST /games` - Create new game
+- `GET /games/:id/full` - Get game with moves
+- `POST /games/:id/moves` - Add move to game
+- `PATCH /games/:id` - Update game status
+
+**Note:** The SQLite database is created automatically on first server start at `server/data/tictactoe.db`.
 
 ## 🎯 How to Play
 

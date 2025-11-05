@@ -1,9 +1,9 @@
 import PlayerIcon from '@/components/PlayerIcon';
-import type { Player } from '@/lib/types';
+import type { BoardCell } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 interface BoardButtonProps {
-  value: Player;
+  value: BoardCell;
   onClick: () => void;
   disabled: boolean;
   isViewingHistory?: boolean;

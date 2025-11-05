@@ -1,11 +1,11 @@
 import { OIcon, XIcon } from '@/icons';
 import { getPlayerColor } from '@/lib/constants';
 import { PlayerValues } from '@/lib/types';
-import type { Player } from '@/lib/types';
+import type { BoardCell } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 interface PlayerIconProps {
-  value: Player;
+  value: BoardCell;
   className?: string;
 }
 

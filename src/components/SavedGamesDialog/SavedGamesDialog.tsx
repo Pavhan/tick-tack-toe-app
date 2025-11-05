@@ -1,8 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { gameService } from '@/api/gameService';
+import { transformBackendGameToSavedGame } from '@/api/transformers';
 import Button from '@/components/Button';
+import { ErrorMessage } from '@/components/ErrorMessage';
 import { useClickOutside } from '@/hooks/useClickOutside';
+import { useGames } from '@/hooks/useGames';
 import { CloseIcon } from '@/icons';
-import { deleteAllGames, deleteGame, getSavedGames } from '@/lib/savedGames';
 import type { SavedGame } from '@/lib/types';
 import { cn } from '@/lib/utils';
 import SavedGameItem from './SavedGameItem';
@@ -17,8 +20,10 @@ type SavedGamesDialogProps = {
 const SavedGamesDialog = (props: SavedGamesDialogProps) => {
   const { isOpen, onClose, onLoadGame, refreshKey } = props;
   const [savedGames, setSavedGames] = useState<SavedGame[]>([]);
+  const [error, setError] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dialogContentRef = useRef<HTMLDivElement>(null);
+  const { games, fetchGames } = useGames();
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -34,21 +39,58 @@ const SavedGamesDialog = (props: SavedGamesDialogProps) => {
 
   useClickOutside({ ref: dialogContentRef, handler: onClose, enabled: isOpen });
 
-  const loadGames = () => {
-    setSavedGames(getSavedGames());
+  const loadGames = async () => {
+    setError(null);
+    await fetchGames({ status: 'completed' });
   };
 
-  const handleDeleteGame = (gameId: string) => {
-    deleteGame(gameId);
-    loadGames();
+  useEffect(() => {
+    if (games.length > 0) {
+      const fetchFullGames = async () => {
+        try {
+          const fullGames = await Promise.all(
+            games.map(async (game) => {
+              try {
+                const response = await gameService.getGameWithMoves(game.id);
+                return transformBackendGameToSavedGame(response.data);
+              } catch (err) {
+                setError(`Failed to load saved games: ${err instanceof Error ? err.message : String(err)}`);
+              }
+            }),
+          );
+          setSavedGames(fullGames.filter((g): g is SavedGame => g !== null));
+          setError(null);
+        } catch (err) {
+          setError(`Failed to load saved games: ${err instanceof Error ? err.message : String(err)}`);
+        }
+      };
+      fetchFullGames();
+    } else {
+      setSavedGames([]);
+    }
+  }, [games]);
+
+  const handleDeleteGame = async (gameId: string) => {
+    try {
+      setError(null);
+      await gameService.deleteGame(Number(gameId));
+      await loadGames();
+    } catch (err) {
+      setError(`Failed to delete game: ${err instanceof Error ? err.message : String(err)}`);
+    }
   };
 
-  const handleDeleteAll = () => {
+  const handleDeleteAll = async () => {
     if (savedGames.length === 0) return;
 
-    deleteAllGames();
-    loadGames();
-    onClose();
+    try {
+      setError(null);
+      await Promise.all(savedGames.map((game) => gameService.deleteGame(Number(game.id))));
+      await loadGames();
+      onClose();
+    } catch (err) {
+      setError(`Failed to delete all games: ${err instanceof Error ? err.message : String(err)}`);
+    }
   };
 
   const handleLoadGame = (game: SavedGame) => {
@@ -78,6 +120,12 @@ const SavedGamesDialog = (props: SavedGamesDialogProps) => {
         </div>
 
         <div className="max-h-[calc(100vh-150px)] grow overflow-y-auto p-3">
+          {error && (
+            <div className="mb-3">
+              <ErrorMessage message={error} onRetry={loadGames} />
+            </div>
+          )}
+
           {savedGames.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <p className="text-gray-500">No saved games yet</p>
