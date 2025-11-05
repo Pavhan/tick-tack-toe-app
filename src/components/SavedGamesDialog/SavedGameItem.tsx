@@ -1,5 +1,5 @@
-import Button from '@/components/Button/Button';
-import PlayerIcon from '@/components/PlayerIcon/PlayerIcon';
+import Button from '@/components/Button';
+import PlayerIcon from '@/components/PlayerIcon';
 import { getPlayerBorderColor, getPlayerTransparentBackground } from '@/lib/constants';
 import type { SavedGame } from '@/lib/types';
 import { cn, formatDate } from '@/lib/utils';

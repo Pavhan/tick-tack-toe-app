@@ -1,4 +1,4 @@
-import PlayerIcon from '@/components/PlayerIcon/PlayerIcon';
+import PlayerIcon from '@/components/PlayerIcon';
 import type { Player } from '@/lib/types';
 import { cn } from '@/lib/utils';
 

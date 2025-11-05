@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import Button from '@/components/Button/Button';
+import Button from '@/components/Button';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { CloseIcon } from '@/icons';
 import { deleteAllGames, deleteGame, getSavedGames } from '@/lib/savedGames';

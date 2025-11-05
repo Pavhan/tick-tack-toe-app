@@ -7,7 +7,7 @@ const ButtonVariant = {
   Danger: 'danger',
 } as const;
 
-type ButtonVariant = (typeof ButtonVariant)[keyof typeof ButtonVariant];
+export type ButtonVariant = (typeof ButtonVariant)[keyof typeof ButtonVariant];
 
 interface ButtonProps {
   children: ReactNode;

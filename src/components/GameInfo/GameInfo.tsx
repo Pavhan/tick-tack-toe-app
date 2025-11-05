@@ -1,4 +1,4 @@
-import PlayerIcon from '@/components/PlayerIcon/PlayerIcon';
+import PlayerIcon from '@/components/PlayerIcon';
 import { getNextPlayer } from '@/lib/constants';
 import type { Winner } from '@/lib/types';
 

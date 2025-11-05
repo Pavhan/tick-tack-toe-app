@@ -1,4 +1,4 @@
-import BoardButton from '@/components/BoardButton/BoardButton';
+import BoardButton from '@/components/BoardButton';
 import type { Player, Winner } from '@/lib/types';
 
 interface BoardProps {

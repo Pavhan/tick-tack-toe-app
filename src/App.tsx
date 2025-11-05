@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import AlertSection from '@/components/Alert/AppSection';
-import Board from '@/components/Board/Board';
-import GameInfo from '@/components/GameInfo/GameInfo';
-import PageHeader from '@/components/PageHeader/PageHeader';
-import RightPanel from '@/components/RightPanel/RightPanel';
-import SavedGamesDialog from '@/components/SavedGamesDialog/SavedGamesDialog';
+import { AlertSection } from '@/components/Alert';
+import Board from '@/components/Board';
+import GameInfo from '@/components/GameInfo';
+import PageHeader from '@/components/PageHeader';
+import RightPanel from '@/components/RightPanel';
+import SavedGamesDialog from '@/components/SavedGamesDialog';
 import { getNextPlayer } from '@/lib/constants';
 import { checkWinner, getWinLength } from '@/lib/gameLogic';
 import { saveGame } from '@/lib/savedGames';

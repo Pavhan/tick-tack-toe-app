@@ -1,4 +1,4 @@
-import Button from '@/components/Button/Button';
+import Button from '@/components/Button';
 import type { ButtonVariant } from '@/components/Button/Button';
 import { InfoIcon } from '@/icons';
 import { cn } from '@/lib/utils';
