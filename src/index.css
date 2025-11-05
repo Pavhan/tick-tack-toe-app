@@ -1,7 +1,17 @@
+@import 'tailwindcss';
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
+}
+
+/* Focus visible styles for clickable elements */
+button:focus-visible,
+a:focus-visible,
+[role='button']:focus-visible,
+[tabindex]:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-2 outline-2 outline-offset-2 outline-blue-500;
 }
 
 a {
@@ -9,19 +19,37 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
+html {
+  @apply h-full;
+}
 body {
+  @apply h-full min-h-screen bg-gray-100 text-gray-500;
+
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
-  min-height: 100vh;
+}
+#root {
+  @apply h-full;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  @apply text-2xl font-bold text-gray-700;
+}
+
+h2 {
+  @apply text-xl font-bold text-gray-700;
+}
+
+h3 {
+  @apply text-lg font-bold text-gray-700;
+}
+h4,
+h5,
+h6 {
+  @apply text-sm font-bold text-gray-700;
 }
