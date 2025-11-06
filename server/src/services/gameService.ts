@@ -80,9 +80,9 @@ export function getGames(status?: GameStatus): GameListItem[] {
   let query = `
     SELECT 
       g.*,
-      COUNT(gm.id) as move_count
-    FROM games g
-    LEFT JOIN game_moves gm ON g.id = gm.game_id
+      COUNT(gm.id) AS move_count
+    FROM games AS g
+    LEFT JOIN game_moves AS gm ON g.id = gm.game_id
   `;
 
   const params: unknown[] = [];
@@ -172,7 +172,7 @@ export function addMove(gameId: number, position: number, player: Player): GameM
 
   // Get next move number
   const { max_move } = db
-    .prepare('SELECT COALESCE(MAX(move_number), 0) as max_move FROM game_moves WHERE game_id = ?')
+    .prepare('SELECT COALESCE(MAX(move_number), 0) AS max_move FROM game_moves WHERE game_id = ?')
     .get(gameId) as { max_move: number };
 
   const moveNumber = max_move + 1;
