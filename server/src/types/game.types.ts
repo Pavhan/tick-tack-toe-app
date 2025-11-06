@@ -1,6 +1,7 @@
-/**
- * Database models
- */
+export type Player = 'X' | 'O';
+export type GameStatus = 'in_progress' | 'completed' | 'abandoned';
+export type GameWinner = 'X' | 'O' | 'draw';
+
 export interface Game {
   id: number;
   board_size: number;
@@ -20,16 +21,6 @@ export interface GameMove {
   created_at: string;
 }
 
-/**
- * Types
- */
-export type Player = 'X' | 'O';
-export type GameStatus = 'in_progress' | 'completed' | 'abandoned';
-export type GameWinner = 'X' | 'O' | 'draw';
-
-/**
- * API Request types
- */
 export interface CreateGameRequest {
   board_size?: number;
 }
@@ -45,9 +36,6 @@ export interface UpdateGameRequest {
   current_player?: Player;
 }
 
-/**
- * API Response types
- */
 export interface GameWithMoves extends Game {
   moves: GameMove[];
 }
@@ -55,10 +43,6 @@ export interface GameWithMoves extends Game {
 export interface GameListItem extends Game {
   move_count: number;
 }
-
-/**
- * Query parameters for listing games
- */
 export interface GameListQuery {
   status?: GameStatus;
 }
