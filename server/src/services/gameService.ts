@@ -1,5 +1,5 @@
-import { getDatabase } from '../db/connection.js';
-import type { Game, GameListItem, GameMove, GameStatus, GameWinner, GameWithMoves, Player } from '../types/index.js';
+import { getDatabase } from '@/db/connection.js';
+import type { Game, GameListItem, GameMove, GameStatus, GameWinner, GameWithMoves, Player } from '@/types/index.js';
 
 // Simple error classes
 class ApiError extends Error {

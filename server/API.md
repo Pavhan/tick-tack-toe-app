@@ -9,7 +9,7 @@ Base URL: `http://localhost:3001/api`
 #### Get All Games
 
 ```
-GET /api/games
+GET /games
 ```
 
 **Query Parameters:**
@@ -47,7 +47,7 @@ curl "http://localhost:3001/api/games?status=in_progress"
 #### Create New Game
 
 ```
-POST /api/games
+POST /games
 ```
 
 **Request Body:**
@@ -89,7 +89,7 @@ curl -X POST http://localhost:3001/api/games \
 #### Get Game by ID
 
 ```
-GET /api/games/:id
+GET /games/:id
 ```
 
 **Example:**
@@ -120,7 +120,7 @@ curl http://localhost:3001/api/games/1
 #### Get Game with All Moves
 
 ```
-GET /api/games/:id/full
+GET /games/:id/full
 ```
 
 **Example:**
@@ -169,16 +169,16 @@ curl http://localhost:3001/api/games/1/full
 #### Update Game
 
 ```
-PATCH /api/games/:id
+PATCH /games/:id
 ```
 
 **Request Body:**
 
 ```json
 {
-  "status": "completed", // Optional: in_progress, completed, abandoned
-  "winner": "X", // Optional: X, O, draw, null
-  "current_player": "O" // Optional: X, O
+  "status": "completed",
+  "winner": "X",
+  "current_player": "O"
 }
 ```
 
@@ -213,7 +213,7 @@ curl -X PATCH http://localhost:3001/api/games/1 \
 #### Delete Game
 
 ```
-DELETE /api/games/:id
+DELETE /games/:id
 ```
 
 **Example:**
@@ -239,7 +239,7 @@ curl -X DELETE http://localhost:3001/api/games/1
 #### Get Game Moves
 
 ```
-GET /api/games/:id/moves
+GET /games/:id/moves
 ```
 
 **Example:**
@@ -279,15 +279,15 @@ curl http://localhost:3001/api/games/1/moves
 #### Add Move to Game
 
 ```
-POST /api/games/:id/moves
+POST /games/:id/moves
 ```
 
 **Request Body:**
 
 ```json
 {
-  "position": 4, // Required: 0-8 for 3x3, 0-24 for 5x5, etc.
-  "player": "X" // Required: X or O
+  "position": 4,
+  "player": "X"
 }
 ```
 
@@ -383,32 +383,4 @@ All error responses follow this format:
     "statusCode": 400
   }
 }
-```
-
----
-
-## Board Position Reference
-
-For a 3x3 board, positions are numbered 0-8:
-
-```
- 0 | 1 | 2
------------
- 3 | 4 | 5
------------
- 6 | 7 | 8
-```
-
-For a 5x5 board, positions are numbered 0-24:
-
-```
- 0  |  1 |  2 |  3 |  4
--------------------------
- 5  |  6 |  7 |  8 |  9
--------------------------
-10  | 11 | 12 | 13 | 14
--------------------------
-15  | 16 | 17 | 18 | 19
--------------------------
-20  | 21 | 22 | 23 | 24
 ```

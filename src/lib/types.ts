@@ -1,9 +1,9 @@
-export type Player = 'X' | 'O';
+export type Player = (typeof PlayerValues)[keyof typeof PlayerValues];
 export type BoardCell = Player | null;
 
 export const PlayerValues = {
-  X: 'X' as Player,
-  O: 'O' as Player,
+  X: 'X',
+  O: 'O',
 } as const;
 
 export type Winner = Player | 'Draw' | null;

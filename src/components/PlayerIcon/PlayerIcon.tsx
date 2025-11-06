@@ -11,6 +11,7 @@ interface PlayerIconProps {
 
 const PlayerIcon = (props: PlayerIconProps) => {
   const { value, className } = props;
+
   return (
     <span className={cn('inline-block size-8', { [getPlayerColor(value)]: value !== null }, className)}>
       {value === PlayerValues.X && <XIcon className="h-full w-full" />}

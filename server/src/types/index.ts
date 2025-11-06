@@ -1,1 +1,1 @@
-export * from './game.types.js';
+export * from './game.js';

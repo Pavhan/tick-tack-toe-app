@@ -1,10 +1,11 @@
+import config from '@/config';
+import { initializeDatabase } from '@/db/index.js';
+import gameRoutes from '@/routes/gameRoutes.js';
 import dotenv from 'dotenv';
-import express, { type NextFunction, type Request, type Response } from 'express';
+import express from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import config from './config.js';
-import { initializeDatabase } from './db/index.js';
-import gameRoutes from './routes/gameRoutes.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

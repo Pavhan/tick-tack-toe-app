@@ -1,7 +1,7 @@
-import { type Request, type Response } from 'express';
-import * as gameService from '../services/gameService.js';
-import type { CreateGameRequest, GameListQuery, MakeMoveRequest } from '../types/index.js';
-import { errorResponse, successResponse } from '../utils/index.js';
+import * as gameService from '@/services/gameService.js';
+import type { CreateGameRequest, GameListQuery, MakeMoveRequest } from '@/types/index.js';
+import { errorResponse, successResponse } from '@/utils/index.js';
+import type { Request, Response } from 'express';
 
 // Simple async handler
 function asyncHandler(fn: (req: Request, res: Response) => Promise<void | Response>) {
