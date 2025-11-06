@@ -360,12 +360,12 @@ components:
           type: string
           format: date-time
           description: Game creation timestamp
-          example: "2025-11-05T10:00:00.000Z"
+          example: '2025-11-05T10:00:00.000Z'
         updated_at:
           type: string
           format: date-time
           description: Last update timestamp
-          example: "2025-11-05T10:00:00.000Z"
+          example: '2025-11-05T10:00:00.000Z'
 
     GameWithMoveCount:
       allOf:
@@ -417,7 +417,7 @@ components:
           type: string
           format: date-time
           description: Move creation timestamp
-          example: "2025-11-05T10:01:00.000Z"
+          example: '2025-11-05T10:01:00.000Z'
 
     Error:
       type: object

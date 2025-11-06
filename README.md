@@ -123,9 +123,6 @@ The backend API provides RESTful endpoints for game management. See [server/API.
 
 ```
 
-
-
-
 ## 📝 License
 
 This is a private project.

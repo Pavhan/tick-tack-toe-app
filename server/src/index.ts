@@ -5,7 +5,9 @@ import dotenv from 'dotenv';
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
 import path from 'path';
+import swaggerUi from 'swagger-ui-express';
 import { fileURLToPath } from 'url';
+import YAML from 'yamljs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -22,9 +24,27 @@ try {
 
 const app = express();
 
+// Load OpenAPI specification
+const openapiDocument = YAML.load(path.join(__dirname, '../openapi.yaml'));
+
 // Body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Swagger UI
+app.use(
+  '/api-docs',
+  swaggerUi.serve,
+  swaggerUi.setup(openapiDocument, {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: 'Tic-Tac-Toe API Documentation',
+  }),
+);
+
+// Redirect root to API docs
+app.get('/', (_req: Request, res: Response) => {
+  res.redirect('/api-docs');
+});
 
 // Routes
 app.use('/api/games', gameRoutes);
