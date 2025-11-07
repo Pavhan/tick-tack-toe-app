@@ -46,7 +46,7 @@ function App() {
       setSavedGamesRefreshKey((prev) => prev + 1);
     }
     setPreviousWinner(winner);
-  }, [winner, boardSize, history, isViewingSavedGame, previousWinner, currentGameId, updateGame]);
+  }, [winner, previousWinner, isViewingSavedGame, currentGameId, updateGame]);
 
   const handleClick = async (index: number) => {
     if (currentHistoryIndex !== null || isViewingSavedGame) return;

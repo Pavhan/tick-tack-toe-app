@@ -1,11 +1,6 @@
 # Environment variables
 .env
 
-# Database files
-data/*.db
-data/*.db-shm
-data/*.db-wal
-
 # Build output
 dist/
 

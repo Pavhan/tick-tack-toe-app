@@ -1,16 +1,20 @@
+import { logger } from '@/utils/logger.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { getDatabase } from './connection.js';
+import { getDatabase, setupDatabaseConnection } from './connection.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Initialize database by running schema SQL file
+ * Initialize database by setting up connection and running schema SQL file
  */
 export function initializeDatabase(): void {
   try {
+    // First ensure the database connection is set up
+    setupDatabaseConnection();
+
     const db = getDatabase();
     const schemaPath = path.join(__dirname, 'schema.sql');
 
@@ -23,9 +27,9 @@ export function initializeDatabase(): void {
     // Execute the schema SQL
     db.exec(schema);
 
-    console.log('✅ Database schema initialized successfully');
+    logger('Database schema initialized successfully');
   } catch (error) {
-    console.error('❌ Failed to initialize database:', error);
+    logger('Failed to initialize database:', error);
     throw error;
   }
 }

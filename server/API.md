@@ -1,6 +1,6 @@
 # Game API Documentation
 
-Base URL: `http://localhost:3001/api`
+Base URL: `http://localhost:3001`
 
 ## Endpoints
 
@@ -9,7 +9,7 @@ Base URL: `http://localhost:3001/api`
 #### Get All Games
 
 ```
-GET /games
+GET /api/games
 ```
 
 **Query Parameters:**
@@ -47,7 +47,7 @@ curl "http://localhost:3001/api/games?status=in_progress"
 #### Create New Game
 
 ```
-POST /games
+POST /api/games
 ```
 
 **Request Body:**
@@ -89,7 +89,7 @@ curl -X POST http://localhost:3001/api/games \
 #### Get Game by ID
 
 ```
-GET /games/:id
+GET /api/games/:id
 ```
 
 **Example:**
@@ -120,7 +120,7 @@ curl http://localhost:3001/api/games/1
 #### Get Game with All Moves
 
 ```
-GET /games/:id/full
+GET /api/games/:id/full
 ```
 
 **Example:**
@@ -169,7 +169,7 @@ curl http://localhost:3001/api/games/1/full
 #### Update Game
 
 ```
-PATCH /games/:id
+PATCH /api/games/:id
 ```
 
 **Request Body:**
@@ -213,7 +213,7 @@ curl -X PATCH http://localhost:3001/api/games/1 \
 #### Delete Game
 
 ```
-DELETE /games/:id
+DELETE /api/games/:id
 ```
 
 **Example:**
@@ -279,7 +279,7 @@ curl http://localhost:3001/api/games/1/moves
 #### Add Move to Game
 
 ```
-POST /games/:id/moves
+POST /api/games/:id/moves
 ```
 
 **Request Body:**
