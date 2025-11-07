@@ -12,6 +12,16 @@ export default defineConfig({
       '@/lib': path.resolve(__dirname, './src/lib'),
       '@/hooks': path.resolve(__dirname, './src/hooks'),
       '@/icons': path.resolve(__dirname, './src/components/Icons'),
+      '@/api': path.resolve(__dirname, './src/api'),
+      '@/config': path.resolve(__dirname, './src/config'),
+    },
+  },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
     },
   },
 });

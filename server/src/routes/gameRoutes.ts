@@ -1,0 +1,57 @@
+import express from 'express';
+
+import * as gameController from '@/controllers/gameController.js';
+
+const router = express.Router();
+
+/**
+ * Get all games
+ * GET /api/games
+ */
+router.get('/', gameController.getAllGames);
+
+/**
+ * Create a new game
+ * POST /api/games
+ */
+router.post('/', gameController.createGame);
+
+/**
+ * Get game with all moves
+ * GET /api/games/:id/full
+ * Must be defined before /:id to avoid route matching conflicts
+ */
+router.get('/:id/full', gameController.getGameWithMoves);
+
+/**
+ * Get moves for a game
+ * GET /api/games/:id/moves
+ * Must be defined before /:id to avoid route matching conflicts
+ */
+router.get('/:id/moves', gameController.getGameMoves);
+
+/**
+ * Get game by ID
+ * GET /api/games/:id
+ */
+router.get('/:id', gameController.getGame);
+
+/**
+ * Update game
+ * PATCH /api/games/:id
+ */
+router.patch('/:id', gameController.updateGame);
+
+/**
+ * Delete game
+ * DELETE /api/games/:id
+ */
+router.delete('/:id', gameController.deleteGame);
+
+/**
+ * Add a move to a game
+ * POST /api/games/:id/moves
+ */
+router.post('/:id/moves', gameController.addMove);
+
+export default router;

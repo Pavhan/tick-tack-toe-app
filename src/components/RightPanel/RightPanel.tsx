@@ -3,12 +3,12 @@ import BoardSizeSelector from '@/components/BoardSizeSelector';
 import Button from '@/components/Button';
 import HistoryMoves from '@/components/HistoryMoves';
 import { useClickOutside } from '@/hooks/useClickOutside';
-import type { HistoryEntry, Winner } from '@/lib/types';
+import type { BoardCell, HistoryEntry, Winner } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 type RightPanelProps = {
   boardSize: number;
-  board: (string | null)[];
+  board: BoardCell[];
   getWinLength: (size: number) => number;
   history: HistoryEntry[];
   currentHistoryIndex: number | null;
@@ -50,7 +50,7 @@ const RightPanel = (props: RightPanelProps) => {
         },
       )}
     >
-      <div className="grow space-y-4 divide-y divide-gray-300">
+      <div className="flex max-h-[calc(100vh-80px)] grow flex-col space-y-4 divide-y divide-gray-300">
         <div className="flex flex-col gap-4 pb-4">
           <Button
             onClick={() => setIsMenuOpen(!isMenuOpen)}

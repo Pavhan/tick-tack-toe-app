@@ -31,7 +31,9 @@
       "@/lib/*": ["src/lib/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/icons": ["src/components/Icons/index.ts"],
-      "@/icons/*": ["src/components/Icons/*"]
+      "@/icons/*": ["src/components/Icons/*"],
+      "@/api/*": ["src/api/*"],
+      "@/config/*": ["src/config/*"]
     }
   },
   "include": ["src"]

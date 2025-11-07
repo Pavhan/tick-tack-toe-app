@@ -23,7 +23,7 @@ const HistoryMoves = (props: HistoryMovesProps) => {
   }
 
   return (
-    <div className="-mx-2 flex max-h-64 flex-col gap-2 overflow-y-auto px-2 pb-2">
+    <div className="-mx-2 grow flex-col gap-2 overflow-y-auto px-2 pb-2">
       <h3>History Moves</h3>
       <ul className="flex flex-col gap-1">
         {history.map((entry, index) => (

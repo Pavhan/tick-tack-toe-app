@@ -1,5 +1,5 @@
 import { PlayerValues } from './types';
-import type { Player } from './types';
+import type { BoardCell, Player } from './types';
 
 export const PLAYER_CONFIG = {
   [PlayerValues.X]: {
@@ -20,19 +20,19 @@ export const getNextPlayer = (isXNext: boolean): Player => {
   return isXNext ? PlayerValues.X : PlayerValues.O;
 };
 
-export const getPlayerColor = (player: Player): string => {
+export const getPlayerColor = (player: BoardCell): string => {
   if (player === PlayerValues.X) return PLAYER_CONFIG.X.color;
   if (player === PlayerValues.O) return PLAYER_CONFIG.O.color;
   return '';
 };
 
-export const getPlayerBorderColor = (player: Player): string => {
+export const getPlayerBorderColor = (player: BoardCell): string => {
   if (player === PlayerValues.X) return PLAYER_CONFIG.X.borderColor;
   if (player === PlayerValues.O) return PLAYER_CONFIG.O.borderColor;
   return '';
 };
 
-export const getPlayerTransparentBackground = (player: Player): string => {
+export const getPlayerTransparentBackground = (player: BoardCell): string => {
   if (player === PlayerValues.X) return PLAYER_CONFIG.X.transparentBackground;
   if (player === PlayerValues.O) return PLAYER_CONFIG.O.transparentBackground;
   return '';

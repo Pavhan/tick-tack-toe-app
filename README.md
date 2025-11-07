@@ -8,10 +8,14 @@ A feature-rich, modern Tic-Tac-Toe game built with React, TypeScript, and Tailwi
 
 - **Classic 3x3 board** - Traditional tic-tac-toe
 - **Extended boards** - Play on boards from 3x3 up to 10x10
-- **Dynamic win conditions** - Win requirements adapt to board size:
+- **Adaptive win conditions** - Win requirements adapt to board size:
   - 3x3 board: 3 in a row
   - 4x4 board: 4 in a row
   - 5x5+ boards: 5 in a row
+- **Real-time move validation** - Ensures valid moves and game rules
+- **Error handling & recovery** - Graceful error handling with user feedback
+- **API Documentation** - Interactive Swagger UI documentation
+- **Database persistence** - Complete game history and state management
 
 ### 📜 Game History
 
@@ -28,11 +32,23 @@ A feature-rich, modern Tic-Tac-Toe game built with React, TypeScript, and Tailwi
 
 ## 🛠️ Tech Stack
 
-- **React 19** - Latest React with modern hooks
-- **TypeScript** - Type-safe code for better development experience
-- **Vite** - Lightning-fast build tool and dev server
-- **Tailwind CSS v4** - Utility-first CSS framework
-- **LocalStorage** - Persistent game saves
+### Frontend
+
+- **React 19.1.1** - Latest React with modern hooks
+- **TypeScript 5.9.3** - Type-safe code for better development experience
+- **Vite 7.1.7** - Lightning-fast build tool and dev server
+- **Tailwind CSS 4.1.16** - Utility-first CSS framework
+
+### Backend
+
+- **Node.js** with **Express 5.1.0** - RESTful API server
+- **SQLite** (better-sqlite3 12.4.1) - Lightweight database
+- **TypeScript 5.9.3** - Type-safe backend code
+
+### Data Persistence
+
+- **Backend API** - Game state and move history
+- **LocalStorage** - Legacy support for saved games
 
 ## 📦 Installation
 
@@ -44,24 +60,60 @@ git clone https://github.com/Pavhan/tick-tack-toe-app.git
 cd tick-tack-toe-app
 
 # Install dependencies
-npm install
+yarn install
 ```
 
 ## 🚀 Usage
 
-```bash
-# Start the development server
-npm run dev
+### Development Mode
 
-# Build for production
-npm run build
+```bash
+# Start both frontend and backend
+yarn dev
+
+# Or start them separately:
+yarn dev:client    # Frontend only (http://localhost:5173)
+yarn dev:server    # Backend only (http://localhost:3001)
+```
+
+### Production Build
+
+```bash
+# Build frontend
+yarn build
+
+# Build backend
+yarn build:server
+
+# Start production server
+yarn start:server
+```
+
+### Other Commands
+
+```bash
+# Run linter
+yarn lint
 
 # Preview production build
-npm run preview
-
-# Run linter
-npm run lint
+yarn preview
 ```
+
+## 🔌 API Documentation
+
+The backend API provides RESTful endpoints for game management. See [server/API.md](./server/API.md) for complete documentation.
+
+**Base URL:** `http://localhost:3001/api`
+
+**Key Endpoints:**
+
+- `GET /games` - List all games
+- `POST /games` - Create new game
+- `GET /games/:id/full` - Get game with moves
+- `POST /games/:id/moves` - Add move to game
+- `PATCH /games/:id` - Update game status
+
+**Note:** The SQLite database is created automatically on first server start at `server/data/tictactoe.db`.
 
 ## 🎯 How to Play
 
@@ -74,9 +126,6 @@ npm run lint
 7. **Load saved games** - Access your previously won games from the "Saved Games" dialog
 
 ```
-
-
-
 
 ## 📝 License
 
