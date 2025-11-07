@@ -1,6 +1,6 @@
+import type { Request, Response } from 'express';
 
 import * as gameService from '@/services/gameService.js';
-import type { Request, Response } from 'express';
 import {
   errorResponse,
   successResponse,
@@ -8,10 +8,11 @@ import {
   validateGameId,
   validateGameListQuery,
   validateMakeMoveRequest,
-  validateUpdateGameRequest} from '@/utils/index.js';
+  validateUpdateGameRequest,
+} from '@/utils/index.js';
 
 // Simple async handler
-function asyncHandler(fn: (req: Request, res: Response) => Promise<void | Response>) {
+function asyncHandler(fn: (req: Request, res: Response) => Promise<void>) {
   return (req: Request, res: Response, next: any): void => {
     Promise.resolve(fn(req, res)).catch(next);
   };

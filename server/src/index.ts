@@ -1,7 +1,4 @@
-import config from '@/config';
-import { initializeDatabase } from '@/db/index.js';
-import gameRoutes from '@/routes/gameRoutes.js';
-import { logger } from '@/utils/logger.js';
+import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import type { NextFunction, Request, Response } from 'express';
@@ -10,6 +7,11 @@ import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import { fileURLToPath } from 'url';
 import YAML from 'yamljs';
+
+import config from '@/config';
+import { initializeDatabase } from '@/db/index.js';
+import gameRoutes from '@/routes/gameRoutes.js';
+import { logger } from '@/utils/logger.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,6 +27,15 @@ async function createApp() {
 
   // Load OpenAPI specification
   const openapiDocument = YAML.load(path.join(__dirname, '../openapi.yaml'));
+
+  // CORS configuration
+  app.use(
+    cors({
+      origin: 'http://localhost:5173',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+      allowedHeaders: ['Content-Type', 'Authorization'],
+    }),
+  );
 
   // Body parsing
   app.use(express.json());
@@ -77,7 +88,7 @@ async function createApp() {
 }
 
 async function startServer(app: express.Application): Promise<Server> {
-  return new Promise((resolve) => {
+  return new Promise<Server>((resolve) => {
     const server = app.listen(config.port, () => {
       logger('Server running on http://localhost:', config.port);
       resolve(server);

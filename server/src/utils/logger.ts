@@ -18,4 +18,3 @@ const prefixedLogger: Logger = (prefix, ...args) => {
 export const logger: Logger = config.isProduction ? baseLogger : prefixedLogger;
 
 export default logger;
-

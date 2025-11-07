@@ -1,7 +1,9 @@
-import { logger } from '@/utils/logger.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+
+import { logger } from '@/utils/logger.js';
+
 import { getDatabase, setupDatabaseConnection } from './connection.js';
 
 const __filename = fileURLToPath(import.meta.url);
