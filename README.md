@@ -8,10 +8,14 @@ A feature-rich, modern Tic-Tac-Toe game built with React, TypeScript, and Tailwi
 
 - **Classic 3x3 board** - Traditional tic-tac-toe
 - **Extended boards** - Play on boards from 3x3 up to 10x10
-- **Dynamic win conditions** - Win requirements adapt to board size:
+- **Adaptive win conditions** - Win requirements adapt to board size:
   - 3x3 board: 3 in a row
   - 4x4 board: 4 in a row
   - 5x5+ boards: 5 in a row
+- **Real-time move validation** - Ensures valid moves and game rules
+- **Error handling & recovery** - Graceful error handling with user feedback
+- **API Documentation** - Interactive Swagger UI documentation
+- **Database persistence** - Complete game history and state management
 
 ### 📜 Game History
 
@@ -30,16 +34,16 @@ A feature-rich, modern Tic-Tac-Toe game built with React, TypeScript, and Tailwi
 
 ### Frontend
 
-- **React 19** - Latest React with modern hooks
-- **TypeScript** - Type-safe code for better development experience
-- **Vite** - Lightning-fast build tool and dev server
-- **Tailwind CSS v4** - Utility-first CSS framework
+- **React 19.1.1** - Latest React with modern hooks
+- **TypeScript 5.9.3** - Type-safe code for better development experience
+- **Vite 7.1.7** - Lightning-fast build tool and dev server
+- **Tailwind CSS 4.1.16** - Utility-first CSS framework
 
 ### Backend
 
-- **Node.js** with **Express.js** - RESTful API server
-- **SQLite** (better-sqlite3) - Lightweight database
-- **TypeScript** - Type-safe backend code
+- **Node.js** with **Express 5.1.0** - RESTful API server
+- **SQLite** (better-sqlite3 12.4.1) - Lightweight database
+- **TypeScript 5.9.3** - Type-safe backend code
 
 ### Data Persistence
 

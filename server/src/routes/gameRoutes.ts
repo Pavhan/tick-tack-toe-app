@@ -17,16 +17,24 @@ router.get('/', gameController.getAllGames);
 router.post('/', gameController.createGame);
 
 /**
+ * Get game with all moves
+ * GET /api/games/:id/full
+ * Must be defined before /:id to avoid route matching conflicts
+ */
+router.get('/:id/full', gameController.getGameWithMoves);
+
+/**
+ * Get moves for a game
+ * GET /api/games/:id/moves
+ * Must be defined before /:id to avoid route matching conflicts
+ */
+router.get('/:id/moves', gameController.getGameMoves);
+
+/**
  * Get game by ID
  * GET /api/games/:id
  */
 router.get('/:id', gameController.getGame);
-
-/**
- * Get game with all moves
- * GET /api/games/:id/full
- */
-router.get('/:id/full', gameController.getGameWithMoves);
 
 /**
  * Update game
@@ -39,12 +47,6 @@ router.patch('/:id', gameController.updateGame);
  * DELETE /api/games/:id
  */
 router.delete('/:id', gameController.deleteGame);
-
-/**
- * Get moves for a game
- * GET /api/games/:id/moves
- */
-router.get('/:id/moves', gameController.getGameMoves);
 
 /**
  * Add a move to a game

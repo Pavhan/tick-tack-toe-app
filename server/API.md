@@ -2,6 +2,25 @@
 
 Base URL: `http://localhost:3001`
 
+## API Documentation
+
+Interactive API documentation is available at:
+http://localhost:3001/api-docs
+
+Features:
+
+- Try endpoints directly in browser
+- Request/response examples
+- Schema definitions
+
+## Status Codes
+
+- `200` - Success (Request completed successfully)
+- `201` - Created (New game/move added successfully)
+- `400` - Bad Request (Invalid input or validation error)
+- `404` - Not Found (Game or move not found)
+- `500` - Server Error (Internal server error)
+
 ## Endpoints
 
 ### Games
@@ -14,7 +33,20 @@ GET /api/games
 
 **Query Parameters:**
 
-- `status` (optional): Filter by game status (`in_progress`, `completed`, `abandoned`)
+- `status` (optional): Filter by game status
+  - `in_progress` - Games currently being played
+  - `completed` - Games that have been won
+  - `abandoned` - Games that were left unfinished
+
+Example:
+
+```bash
+# Get all completed games
+curl "http://localhost:3001/api/games?status=completed"
+
+# Get games in progress
+curl "http://localhost:3001/api/games?status=in_progress"
+```
 
 **Example:**
 
