@@ -1,11 +1,11 @@
 # Game API Documentation
 
-Base URL: `http://localhost:3001`
+Base URL: `http://localhost:3002`
 
 ## API Documentation
 
 Interactive API documentation is available at:
-http://localhost:3001/api-docs
+http://localhost:3002/api-docs
 
 Features:
 
@@ -42,16 +42,16 @@ Example:
 
 ```bash
 # Get all completed games
-curl "http://localhost:3001/api/games?status=completed"
+curl "http://localhost:3002/api/games?status=completed"
 
 # Get games in progress
-curl "http://localhost:3001/api/games?status=in_progress"
+curl "http://localhost:3002/api/games?status=in_progress"
 ```
 
 **Example:**
 
 ```bash
-curl "http://localhost:3001/api/games?status=in_progress"
+curl "http://localhost:3002/api/games?status=in_progress"
 ```
 
 **Response:**
@@ -93,7 +93,7 @@ POST /api/games
 **Example:**
 
 ```bash
-curl -X POST http://localhost:3001/api/games \
+curl -X POST http://localhost:3002/api/games \
   -H "Content-Type: application/json" \
   -d '{"board_size": 3}'
 ```
@@ -127,7 +127,7 @@ GET /api/games/:id
 **Example:**
 
 ```bash
-curl http://localhost:3001/api/games/1
+curl http://localhost:3002/api/games/1
 ```
 
 **Response:**
@@ -158,7 +158,7 @@ GET /api/games/:id/full
 **Example:**
 
 ```bash
-curl http://localhost:3001/api/games/1/full
+curl http://localhost:3002/api/games/1/full
 ```
 
 **Response:**
@@ -217,7 +217,7 @@ PATCH /api/games/:id
 **Example:**
 
 ```bash
-curl -X PATCH http://localhost:3001/api/games/1 \
+curl -X PATCH http://localhost:3002/api/games/1 \
   -H "Content-Type: application/json" \
   -d '{"status": "completed", "winner": "X"}'
 ```
@@ -251,7 +251,7 @@ DELETE /api/games/:id
 **Example:**
 
 ```bash
-curl -X DELETE http://localhost:3001/api/games/1
+curl -X DELETE http://localhost:3002/api/games/1
 ```
 
 **Response:**
@@ -277,7 +277,7 @@ GET /games/:id/moves
 **Example:**
 
 ```bash
-curl http://localhost:3001/api/games/1/moves
+curl http://localhost:3002/api/games/1/moves
 ```
 
 **Response:**
@@ -326,7 +326,7 @@ POST /api/games/:id/moves
 **Example:**
 
 ```bash
-curl -X POST http://localhost:3001/api/games/1/moves \
+curl -X POST http://localhost:3002/api/games/1/moves \
   -H "Content-Type: application/json" \
   -d '{"position": 4, "player": "X"}'
 ```

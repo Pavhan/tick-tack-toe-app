@@ -18,7 +18,7 @@ export function initializeDatabase(): void {
     setupDatabaseConnection();
 
     const db = getDatabase();
-    const schemaPath = path.join(__dirname, 'schema.sql');
+    const schemaPath = path.join(__dirname, '../../../db/schema.sql');
 
     if (!fs.existsSync(schemaPath)) {
       throw new Error(`Schema file not found: ${schemaPath}`);

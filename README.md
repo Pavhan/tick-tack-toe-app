@@ -41,14 +41,15 @@ A feature-rich, modern Tic-Tac-Toe game built with React, TypeScript, and Tailwi
 
 ### Backend
 
-- **Node.js** with **Express 5.1.0** - RESTful API server
-- **SQLite** (better-sqlite3 12.4.1) - Lightweight database
-- **TypeScript 5.9.3** - Type-safe backend code
+- **Rust (Axum 0.7)** - RESTful API server located in `server-rust`
+- **Tokio 1.x** - Asynchronous runtime with graceful shutdown
+- **rusqlite 0.31** - SQLite driver with WAL mode and foreign keys
 
 ### Data Persistence
 
 - **Backend API** - Game state and move history
 - **LocalStorage** - Legacy support for saved games
+- **Shared schema** - SQL schema stored in the root `db/schema.sql`
 
 ## 📦 Installation
 
@@ -68,24 +69,29 @@ yarn install
 ### Development Mode
 
 ```bash
-# Start both frontend and backend
-yarn dev
+# Start frontend + Rust backend (default)
+yarn dev          # alias for yarn dev:rust
 
-# Or start them separately:
-yarn dev:client    # Frontend only (http://localhost:5173)
-yarn dev:server    # Backend only (http://localhost:3001)
+# Explicit targets
+yarn dev:rust     # Frontend + Rust backend
+yarn dev:node     # Frontend + Node backend
+
+# Individual pieces
+yarn dev:client        # Frontend only (http://localhost:5173)
+yarn dev:server:rust   # Rust backend only (http://localhost:3002)
+yarn dev:server:node   # Node backend only (http://localhost:3002)
 ```
 
 ### Production Build
 
 ```bash
-# Build frontend
+# Build frontend + backend
 yarn build
 
-# Build backend
+# Build backend only
 yarn build:server
 
-# Start production server
+# Start production Rust server
 yarn start:server
 ```
 
@@ -97,13 +103,19 @@ yarn lint
 
 # Preview production build
 yarn preview
+
+# Run Rust backend tests
+cargo test --manifest-path server-rust/Cargo.toml
 ```
 
 ## 🔌 API Documentation
 
-The backend API provides RESTful endpoints for game management. See [server/API.md](./server/API.md) for complete documentation.
+Both backends expose the same REST API. Pick the documentation that matches the stack you are using:
 
-**Base URL:** `http://localhost:3001/api`
+- Node backend: [server/API.md](./server/API.md)
+- Rust backend: [server-rust/API.md](./server-rust/API.md)
+
+**Base URL:** `http://localhost:3002/api`
 
 **Key Endpoints:**
 
@@ -113,7 +125,9 @@ The backend API provides RESTful endpoints for game management. See [server/API.
 - `POST /games/:id/moves` - Add move to game
 - `PATCH /games/:id` - Update game status
 
-**Note:** The SQLite database is created automatically on first server start at `server/data/tictactoe.db`.
+**Note:** The SQLite database is shared and created automatically at `db/tictactoe.db`.  
+Set `DATABASE_PATH=../db/tictactoe.db` in `server/.env` (Node) and `DATABASE_PATH=./db/tictactoe.db` in `server-rust/.env` when running the respective backends.
+Both backends load configuration from their respective `.env` files (`server/.env`, `server-rust/.env`) with matching keys (`PORT`, `DATABASE_PATH`, `NODE_ENV`).
 
 ## 🎯 How to Play
 
