@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Get database path from environment or use default
-const DB_PATH = process.env.DATABASE_PATH || path.join(__dirname, '../../data/tictactoe.db');
+const DB_PATH = process.env.DATABASE_PATH || path.join(__dirname, '../../../db/tictactoe.db');
 
 let db: Database.Database | null = null;
 let isInitialized = false;

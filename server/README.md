@@ -24,7 +24,7 @@ npm install
 npm run dev
 ```
 
-The server will start on `http://localhost:3001`
+The server will start on `http://localhost:3002`
 
 ### Build
 
@@ -37,7 +37,7 @@ npm start
 
 Once the server is running, you can access the interactive API documentation at:
 
-**Swagger UI**: http://localhost:3001/api-docs
+**Swagger UI**: http://localhost:3002/api-docs
 
 The Swagger UI provides:
 
@@ -71,7 +71,8 @@ For detailed API documentation with examples, see [API.md](./API.md) or visit th
 Create a `.env` file in the server directory:
 
 ```env
-PORT=3001
+PORT=3002
+DATABASE_PATH=../db/tictactoe.db
 NODE_ENV=development
 ```
 
@@ -141,7 +142,7 @@ See [API.md](./API.md) for complete API documentation.
 
 ## Database
 
-The SQLite database is automatically created at `server/data/tictactoe.db` on first server start. The database schema is initialized automatically using the SQL script in `src/db/schema.sql`.
+The SQLite database is automatically created at `db/tictactoe.db` on first server start. The database schema is initialized automatically using the SQL script in the shared `db/schema.sql`.
 
 ### Database Schema
 
