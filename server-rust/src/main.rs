@@ -1,4 +1,4 @@
-use server_rust::{app, config, db};
+use server_rust::{config, db, http};
 
 #[tokio::main]
 async fn main() {
@@ -9,11 +9,11 @@ async fn main() {
 }
 
 async fn start() -> Result<(), Box<dyn std::error::Error>> {
-    let cfg = config::config().clone();
+    let cfg = config::config();
 
     db::init()?;
 
-    let router = app::create_router();
+    let router = http::routes::build_router();
     let listener = tokio::net::TcpListener::bind(cfg.address()).await?;
 
     println!(
@@ -32,10 +32,10 @@ async fn shutdown_signal() {
     let ctrl_c = tokio::signal::ctrl_c();
 
     #[cfg(unix)]
-    let terminate = {
+    let terminate = async {
         use tokio::signal::unix::{SignalKind, signal};
-        let mut sigterm = signal(SignalKind::terminate()).expect("Nelze zachytit SIGTERM");
-        async move { sigterm.recv().await }
+        let mut sigterm = signal(SignalKind::terminate()).expect("Cannot catch SIGTERM");
+        sigterm.recv().await
     };
 
     #[cfg(not(unix))]
@@ -46,5 +46,5 @@ async fn shutdown_signal() {
         _ = terminate => {},
     }
 
-    println!("Zastavuji server...");
+    println!("Stopping server...");
 }

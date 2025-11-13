@@ -1,7 +1,6 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 
-use once_cell::sync::OnceCell;
 use rusqlite::Connection;
 use thiserror::Error;
 
@@ -9,11 +8,8 @@ use crate::config;
 
 const SCHEMA_RELATIVE_PATH: &str = "../db/schema.sql";
 
-static INITIALIZED: OnceCell<()> = OnceCell::new();
-
 pub fn init() -> Result<(), DbError> {
-    INITIALIZED.get_or_try_init(|| open_connection().map(|_| ()))?;
-
+    let _connection = open_connection()?;
     Ok(())
 }
 
@@ -85,7 +81,7 @@ fn load_schema_sql() -> Result<String, DbError> {
 
 #[derive(Debug, Error)]
 pub enum DbError {
-    #[error("Chyba SQLite: {0}")]
+    #[error("SQLite error: {0}")]
     Sqlite(#[from] rusqlite::Error),
     #[error("Filesystem error: {0}")]
     Io(#[from] std::io::Error),

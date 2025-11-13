@@ -3,7 +3,7 @@ use axum::{
     http::{HeaderValue, Method, header},
     routing::get,
 };
-use tower_http::{cors::CorsLayer, trace::TraceLayer};
+use tower_http::cors::CorsLayer;
 
 use crate::http::handlers::games;
 
@@ -11,7 +11,6 @@ pub fn build_router() -> Router {
     Router::new()
         .nest("/api/games", games_router())
         .layer(cors_layer())
-        .layer(TraceLayer::new_for_http())
 }
 
 fn games_router() -> Router {

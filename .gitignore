@@ -25,4 +25,9 @@ dist-ssr
 
 .env
 
+# Database files
+db/*.db
+db/*.db-shm
+db/*.db-wal
+
 /server-rust/target

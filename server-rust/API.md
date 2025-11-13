@@ -164,7 +164,7 @@ Rust backend reads the following keys from `server-rust/.env` (or `.env.local`):
 |----------|---------|-------------|
 | `PORT` | `3002` | HTTP server port |
 | `DATABASE_PATH` | `./db/tictactoe.db` | SQLite database file |
-| `NODE_ENV` | `development` | Environment label |
+| `ENVIRONMENT` | `development` | Environment label |
 
 ## Running the Rust Backend
 

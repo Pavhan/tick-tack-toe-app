@@ -30,7 +30,7 @@ impl Config {
             .map(PathBuf::from)
             .unwrap_or_else(|_| PathBuf::from(DEFAULT_DATABASE_PATH));
 
-        let environment = env::var("NODE_ENV").unwrap_or_else(|_| "development".to_string());
+        let environment = env::var("ENVIRONMENT").unwrap_or_else(|_| "development".to_string());
 
         Self {
             port,
@@ -61,16 +61,17 @@ pub fn config() -> &'static Config {
 }
 
 fn load_dotenv() {
-    let current_dir = env::current_dir().ok();
-    let candidates = current_dir.iter().flat_map(|root| {
-        [
-            root.join("server-rust/.env"),
-        ]
-    });
+    let Ok(root) = env::current_dir() else {
+        return;
+    };
 
-    for path in candidates {
+    let paths = vec![root.join(".env"), root.join("server-rust/.env")];
+
+    for path in paths {
         if path.exists() {
-            let _ = dotenvy::from_path(path);
+            if let Err(error) = dotenvy::from_path(&path) {
+                eprintln!("Warning: Failed to load .env file from {}: {}", path.display(), error);
+            }
             break;
         }
     }

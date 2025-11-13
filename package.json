@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-
     "dev:client": "vite",
     "dev:client:rust": "VITE_BACKEND_TYPE=rust vite",
     "dev:client:node": "VITE_BACKEND_TYPE=node vite",

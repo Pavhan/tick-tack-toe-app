@@ -69,15 +69,14 @@ yarn install
 ### Development Mode
 
 ```bash
-# Start frontend + Rust backend (default)
-yarn dev          # alias for yarn dev:rust
-
-# Explicit targets
-yarn dev:rust     # Frontend + Rust backend
-yarn dev:node     # Frontend + Node backend
+# Start frontend + backend together
+yarn dev:rust     # Frontend + Rust backend (http://localhost:5173 + http://localhost:3002)
+yarn dev:node     # Frontend + Node backend (http://localhost:5173 + http://localhost:3002)
 
 # Individual pieces
-yarn dev:client        # Frontend only (http://localhost:5173)
+yarn dev:client        # Frontend only (http://localhost:5173) - default backend type
+yarn dev:client:rust   # Frontend only with Rust backend type (http://localhost:5173)
+yarn dev:client:node   # Frontend only with Node backend type (http://localhost:5173)
 yarn dev:server:rust   # Rust backend only (http://localhost:3002)
 yarn dev:server:node   # Node backend only (http://localhost:3002)
 ```
@@ -88,8 +87,9 @@ yarn dev:server:node   # Node backend only (http://localhost:3002)
 # Build frontend + backend
 yarn build
 
-# Build backend only
-yarn build:server
+# Build individual pieces
+yarn build:client  # Frontend only
+yarn build:server  # Rust backend only
 
 # Start production Rust server
 yarn start:server
@@ -127,7 +127,7 @@ Both backends expose the same REST API. Pick the documentation that matches the 
 
 **Note:** The SQLite database is shared and created automatically at `db/tictactoe.db`.  
 Set `DATABASE_PATH=../db/tictactoe.db` in `server/.env` (Node) and `DATABASE_PATH=./db/tictactoe.db` in `server-rust/.env` when running the respective backends.
-Both backends load configuration from their respective `.env` files (`server/.env`, `server-rust/.env`) with matching keys (`PORT`, `DATABASE_PATH`, `NODE_ENV`).
+Both backends load configuration from their respective `.env` files (`server/.env`, `server-rust/.env`). The Node backend uses `NODE_ENV` while the Rust backend uses `ENVIRONMENT` for environment configuration. Both use `PORT` and `DATABASE_PATH`.
 
 ## 🎯 How to Play
 
