@@ -1,20 +1,24 @@
+use anyhow::Context;
 use server_rust::{config, db, http};
 
 #[tokio::main]
 async fn main() {
     if let Err(error) = start().await {
-        eprintln!("Failed to start server: {error}");
+        eprintln!("Failed to start server: {error:?}");
         std::process::exit(1);
     }
 }
 
-async fn start() -> Result<(), Box<dyn std::error::Error>> {
+async fn start() -> anyhow::Result<()> {
     let cfg = config::config();
 
-    db::init()?;
+    db::init()
+        .context("Failed to initialize database")?;
 
     let router = http::routes::build_router();
-    let listener = tokio::net::TcpListener::bind(cfg.address()).await?;
+    let listener = tokio::net::TcpListener::bind(cfg.address())
+        .await
+        .with_context(|| format!("Failed to bind to address {}", cfg.address()))?;
 
     println!(
         "Server running at http://localhost:{}",
@@ -23,7 +27,8 @@ async fn start() -> Result<(), Box<dyn std::error::Error>> {
 
     axum::serve(listener, router.into_make_service())
         .with_graceful_shutdown(shutdown_signal())
-        .await?;
+        .await
+        .context("Server error during execution")?;
 
     Ok(())
 }
